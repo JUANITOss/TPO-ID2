@@ -10,9 +10,9 @@ const Cart = () => {
       try {
         const response = await api.get('/carritos/mi-carrito');
         setCarrito(response.data);
-        setLoading(false);
       } catch (error) {
         console.error('Error al cargar el carrito:', error);
+      } finally {
         setLoading(false);
       }
     };
@@ -24,7 +24,7 @@ const Cart = () => {
     return <div>Cargando...</div>; // Indicador de carga
   }
 
-  if (!carrito) {
+  if (!carrito || !carrito.items) {
     return <div>No hay productos en el carrito</div>; // Mensaje cuando el carrito está vacío o no se carga
   }
 
