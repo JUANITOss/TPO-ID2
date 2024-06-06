@@ -4,14 +4,17 @@ const RedisStore = require('connect-redis').default;
 const redis = require('redis');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
+// Conexiones
 const app = express();
 const redisClient = redis.createClient();
+mongoose.connect('mongodb://localhost/tienda');
 
-mongoose.connect('mongodb://localhost/tienda', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+// Habilitar CORS
+app.use(cors());
+
+
 
 app.use(session({
   store: new RedisStore({ client: redisClient }),
