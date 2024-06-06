@@ -21,12 +21,14 @@ const ProductList = () => {
           <li key={producto.productId}>
             {producto.nombreProducto} - Precio: {producto.precio}
             <br />
+            {producto.descripcion}
+            <br />
             <img src={producto.fotos[0]} alt={producto.nombreProducto} width="100" />
             <br />
             {producto.videos.map(video => (
               <video key={video} width="200" controls>
                 <source src={video} type="video/mp4" />
-                Your browser does not support the video tag.
+                 Your browser does not support the video tag.
               </video>
             ))}
           </li>

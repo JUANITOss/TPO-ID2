@@ -1,101 +1,76 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../api';
 
-const Cart = ({ userId }) => {
-  const [carrito, setCarrito] = useState([]);
-  const [productos, setProductos] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState('');
-  const [cantidad, setCantidad] = useState(1);
+const Cart = () => {
+  const [carrito, setCarrito] = useState(null); // Inicializamos el carrito como null
+  const [loading, setLoading] = useState(true); // Estado para manejar la carga de datos
 
   useEffect(() => {
-    const fetchCarrito = async () => {
-      const response = await api.get(`/carritos/${userId}`);
-      setCarrito(response.data.items);
+    const fetchCart = async () => {
+      try {
+        const response = await api.get('/carritos/mi-carrito');
+        setCarrito(response.data);
+      } catch (error) {
+        console.error('Error al cargar el carrito:', error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const fetchProductos = async () => {
-      const response = await api.get('/productos');
-      setProductos(response.data);
-    };
+    fetchCart();
+  }, []);
 
-    fetchCarrito();
-    fetchProductos();
-  }, [userId]);
+  if (loading) {
+    return <div>Cargando...</div>; // Indicador de carga
+  }
 
-  const agregarProducto = async () => {
-    const producto = productos.find(p => p.productId === selectedProduct);
-    const newItem = {
-      productId: selectedProduct,
-      nombreProducto: producto.nombreProducto,
-      cantidad: parseInt(cantidad, 10),
-      precio: producto.precio,
-    };
+  if (!carrito || !carrito.items) {
+    return <div>No hay productos en el carrito</div>; // Mensaje cuando el carrito está vacío o no se carga
+  }
 
-    const updatedCarrito = [...carrito, newItem];
-    setCarrito(updatedCarrito);
-
-    await api.post(`/carritos/${userId}/items`, newItem);
-
-    setSelectedProduct('');
-    setCantidad(1);
+  const handleAddProduct = async (productId) => {
+    try {
+      const response = await api.post(`/carritos/agregar/${productId}`);
+      setCarrito(response.data);
+    } catch (error) {
+      console.error('Error al agregar producto:', error);
+    }
   };
 
-  const eliminarProducto = async (productId) => {
-    const updatedCarrito = carrito.filter(item => item.productId !== productId);
-    setCarrito(updatedCarrito);
-
-    await api.delete(`/carritos/${userId}/items/${productId}`);
+  const handleRemoveProduct = async (productId) => {
+    try {
+      const response = await api.post(`/carritos/eliminar/${productId}`);
+      setCarrito(response.data);
+    } catch (error) {
+      console.error('Error al eliminar producto:', error);
+    }
   };
 
-  const cambiarCantidad = async (productId, newCantidad) => {
-    const updatedCarrito = carrito.map(item => 
-      item.productId === productId ? { ...item, cantidad: parseInt(newCantidad, 10) } : item
-    );
-    setCarrito(updatedCarrito);
-
-    await api.put(`/carritos/${userId}/items/${productId}`, { cantidad: parseInt(newCantidad, 10) });
-  };
-
-  const convertirEnPedido = async () => {
-    const response = await api.post(`/carritos/${userId}/convertir-en-pedido`);
-    alert('Carrito convertido en pedido con éxito');
-    setCarrito([]);
+  const handleChangeQuantity = async (productId, quantity) => {
+    try {
+      const response = await api.post(`/carritos/cambiar-cantidad/${productId}`, { quantity });
+      setCarrito(response.data);
+    } catch (error) {
+      console.error('Error al cambiar cantidad de producto:', error);
+    }
   };
 
   return (
     <div>
       <h2>Carrito de Compras</h2>
-      <select value={selectedProduct} onChange={e => setSelectedProduct(e.target.value)}>
-        <option value="">Selecciona un producto</option>
-        {productos.map(producto => (
-          <option key={producto.productId} value={producto.productId}>
-            {producto.nombreProducto}
-          </option>
-        ))}
-      </select>
-      <input
-        type="number"
-        min="1"
-        value={cantidad}
-        onChange={e => setCantidad(e.target.value)}
-        placeholder="Cantidad"
-      />
-      <button onClick={agregarProducto}>Agregar</button>
-      <ul>
-        {carrito.map(item => (
-          <li key={item.productId}>
-            {item.nombreProducto} - Cantidad: 
-            <input
-              type="number"
-              min="1"
-              value={item.cantidad}
-              onChange={e => cambiarCantidad(item.productId, e.target.value)}
-            />
-            <button onClick={() => eliminarProducto(item.productId)}>Eliminar</button>
-          </li>
-        ))}
-      </ul>
-      <button onClick={convertirEnPedido}>Convertir en Pedido</button>
+      {carrito.items.map((item) => (
+        <div key={item.productId}>
+          <h3>{item.productName}</h3>
+          <p>Cantidad: {item.quantity}</p>
+          <button onClick={() => handleAddProduct(item.productId)}>Agregar</button>
+          <button onClick={() => handleRemoveProduct(item.productId)}>Eliminar</button>
+          <input
+            type="number"
+            value={item.quantity}
+            onChange={(e) => handleChangeQuantity(item.productId, e.target.value)}
+          />
+        </div>
+      ))}
     </div>
   );
 };

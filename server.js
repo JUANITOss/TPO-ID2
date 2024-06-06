@@ -13,6 +13,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'Backend conectado correctamente' });
+});
+
 const connectDB = async () => {
   try {
     await mongoose.connect('mongodb://localhost:27017/tienda');
