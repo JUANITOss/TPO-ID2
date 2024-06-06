@@ -1,6 +1,6 @@
 const express = require('express');
 const session = require('express-session');
-const RedisStore = require('connect-redis')(session);
+const RedisStore = require('connect-redis').default;
 const redis = require('redis');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
