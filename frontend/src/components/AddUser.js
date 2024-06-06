@@ -6,13 +6,17 @@ const AddUser = () => {
   const [apellido, setApellido] = useState('');
   const [direccion, setDireccion] = useState('');
   const [documentoIdentidad, setDocumentoIdentidad] = useState('');
+  const [condicionIVA, setCondicionIVA] = useState('');
 
   const agregarUsuario = async () => {
     const nuevoUsuario = {
+      userId: `user-${Date.now()}`,
       nombre,
       apellido,
       direccion,
-      documentoIdentidad
+      documentoIdentidad,
+      condicionIVA,
+      tiempoConectado: []
     };
 
     await api.post('/usuarios', nuevoUsuario);
@@ -20,6 +24,7 @@ const AddUser = () => {
     setApellido('');
     setDireccion('');
     setDocumentoIdentidad('');
+    setCondicionIVA('');
   };
 
   return (
@@ -29,6 +34,7 @@ const AddUser = () => {
       <input type="text" placeholder="Apellido" value={apellido} onChange={e => setApellido(e.target.value)} />
       <input type="text" placeholder="Dirección" value={direccion} onChange={e => setDireccion(e.target.value)} />
       <input type="text" placeholder="Documento de Identidad" value={documentoIdentidad} onChange={e => setDocumentoIdentidad(e.target.value)} />
+      <input type="text" placeholder="Condición ante el IVA" value={condicionIVA} onChange={e => setCondicionIVA(e.target.value)} />
       <button onClick={agregarUsuario}>Agregar</button>
     </div>
   );

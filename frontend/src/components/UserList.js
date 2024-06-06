@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import api from '../api';
 
 const UserList = () => {
@@ -15,7 +15,7 @@ const UserList = () => {
 
   return (
     <div>
-      <h1>Lista de Usuarios</h1>
+      <h2>Usuarios</h2>
       <ul>
         {usuarios.map(usuario => (
           <li key={usuario.userId}>{usuario.nombre} {usuario.apellido}</li>
