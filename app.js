@@ -14,8 +14,6 @@ mongoose.connect('mongodb://localhost/tienda');
 // Habilitar CORS
 app.use(cors());
 
-
-
 app.use(session({
   store: new RedisStore({ client: redisClient }),
   secret: 'your-secret-key',
