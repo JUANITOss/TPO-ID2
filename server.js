@@ -6,8 +6,6 @@ const cors = require('cors');
 const session = require("express-session");
 const redis = require("redis");
 const RedisStore = require("connect-redis").default;
-const sessionTracker = require('./middleware/sessionTracker');
-
 
 // URLS
 const userRoutes = require('./routes/user');
@@ -56,7 +54,6 @@ app.use(
     cookie: {secure: false,}, // CAMBIARLO A TRUE SI USAMOS HTTPS
  })
  );
- app.use(sessionTracker)
 
  // Rutas
 app.use('/usuarios', userRoutes);

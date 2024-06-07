@@ -30,7 +30,12 @@ router.post('/login', async (req, res) => {
   await user.save();
 
   req.session.userId = user._id;
-  res.send({ userId: user._id });
+  req.session.save(err => {
+    if (err) {
+      return res.status(500).send({ message: 'Error al iniciar sesión' });
+    }
+    res.send({ userId: user._id });
+  });
 });
 
 // Ruta de logout
@@ -56,6 +61,24 @@ router.get('/session', (req, res) => {
   } else {
     res.status(401).send({ message: 'No autenticado' });
   }
+});
+
+// Ruta para obtener el tiempo de sesión activa
+router.get('/session-time', async (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).send({ message: 'No autenticado' });
+  }
+
+  const user = await User.findById(req.session.userId);
+  if (!user || !user.sessionStart) {
+    return res.status(400).send({ message: 'Sesión no encontrada' });
+  }
+
+  const sessionStart = new Date(user.sessionStart);
+  const currentTime = new Date();
+  const sessionTime = Math.floor((currentTime - sessionStart) / 60000); // Convertir a minutos
+
+  res.send({ sessionTime });
 });
 
 module.exports = router;

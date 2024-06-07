@@ -1,59 +1,47 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import api from '../api';
 
 const Register = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [nombre, setNombre] = useState('');
-  const [direccion, setDireccion] = useState('');
-  const [dni, setDni] = useState('');
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+    nombre: '',
+    direccion: '',
+    dni: ''
+  });
+
   const navigate = useNavigate();
 
-  const handleRegister = async () => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      await api.post('/usuarios/register', { username, password, nombre, direccion, dni });
+      await axios.post('/api/users/register', formData);
       navigate('/login');
     } catch (error) {
-      console.error('Error en el registro:', error);
-      alert('Error al registrar usuario');
+      console.error('Error al registrar', error);
     }
   };
 
   return (
     <div>
-      <h2>Registrar</h2>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Nombre"
-        value={nombre}
-        onChange={(e) => setNombre(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Dirección"
-        value={direccion}
-        onChange={(e) => setDireccion(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="DNI"
-        value={dni}
-        onChange={(e) => setDni(e.target.value)}
-      />
-      <button onClick={handleRegister}>Registrar</button>
+      <h2>Register</h2>
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleChange} required />
+        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
+        <input type="text" name="nombre" placeholder="Nombre" value={formData.nombre} onChange={handleChange} required />
+        <input type="text" name="direccion" placeholder="Dirección" value={formData.direccion} onChange={handleChange} required />
+        <input type="text" name="dni" placeholder="DNI" value={formData.dni} onChange={handleChange} required />
+        <button type="submit">Register</button>
+      </form>
     </div>
   );
 };
