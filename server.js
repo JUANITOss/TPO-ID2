@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
-const RedisStore = require('connect-redis').default;
+const RedisStore = require('connect-redis')(session);
 const redis = require('redis');
+const sessionTracker = require('./middleware/sessionTracker');
 
 const userRoutes = require('./routes/user');
 const cartRoutes = require('./routes/cart');
@@ -45,6 +46,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: { secure: false } // Cambiar a true si cambiamos a HTTPS!!!
 }));
+app.use(sessionTracker); // Trackeo de tiempo de sesion
 
 // Rutas
 app.use('/usuarios', userRoutes);
