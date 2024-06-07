@@ -1,12 +1,15 @@
+// IMPORTS
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const session = require('express-session');
-const RedisStore = require('connect-redis')(session);
-const redis = require('redis');
+const session = require("express-session");
+const redis = require("redis");
+const RedisStore = require("connect-redis").default;
 const sessionTracker = require('./middleware/sessionTracker');
 
+
+// URLS
 const userRoutes = require('./routes/user');
 const cartRoutes = require('./routes/cart');
 const orderRoutes = require('./routes/order');
@@ -16,39 +19,46 @@ const invoiceRoutes = require('./routes/invoice');
 const app = express();
 
 // Conectar a Redis
-const redisClient = redis.createClient();
-redisClient.on('error', (err) => {
-  console.error('Error conectando a Redis:', err);
+const redisClient = redis.createClient({
+  url: "redis://localhost:6379",
 });
-redisClient.on('connect', () => {
-  console.log('Conectado a Redis');
+
+redisClient.on('error', err => console.log('Error conectando a Redis: ', err));
+
+redisClient.connect();
+
+let redisStore = new RedisStore({
+  client: redisClient,
 });
 
 // Conectar a MongoDB
 const connectDB = async () => {
   try {
     await mongoose.connect('mongodb://localhost:27017/tienda');
-    console.log('Conectado a MongoDB');
   } catch (error) {
-    console.error('Error conectando a MongoDB:', error);
+    console.error('Error conectando a MongoDB: ', error);
     process.exit(1);
   }
 };
 connectDB();
 
+console.log('Conectado a MongoDB y Redis');
+
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(session({
-  store: new RedisStore({ client: redisClient }),
-  secret: 'your-secret-key',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { secure: false } // Cambiar a true si cambiamos a HTTPS!!!
-}));
-app.use(sessionTracker); // Trackeo de tiempo de sesion
+app.use(
+  session({
+    store: redisStore,
+    secret: "PWD",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {secure: false,}, // CAMBIARLO A TRUE SI USAMOS HTTPS
+ })
+ );
+ app.use(sessionTracker)
 
-// Rutas
+ // Rutas
 app.use('/usuarios', userRoutes);
 app.use('/carritos', cartRoutes);
 app.use('/pedidos', orderRoutes);
