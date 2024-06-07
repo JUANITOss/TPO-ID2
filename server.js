@@ -17,9 +17,17 @@ const invoiceRoutes = require('./routes/invoice');
 const app = express();
 
 // Conectar a Redis
-const redisClient = redis.createClient();
+const redisClient = redis.createClient({
+  url: "redis://localhost:6379",
+});
 
 redisClient.on('error', err => console.log('Error conectando a Redis: ', err));
+
+redisClient.connect();
+
+let redisStore = new RedisStore({
+  client: redisClient,
+});
 
 // Conectar a MongoDB
 const connectDB = async () => {
@@ -37,14 +45,15 @@ console.log('Conectado a MongoDB y Redis');
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-
-app.use(session({
-  store: new RedisStore({ client: redisClient }),
-  secret: 'your_secret_key',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {secure: false } // 1 hour
-}));
+app.use(
+  session({
+    store: redisStore,
+    secret: "PWD",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {secure: false,}, // CAMBIARLO A TRUE SI USAMOS HTTPS
+ })
+ );
 
  // Rutas
 app.use('/usuarios', userRoutes);
