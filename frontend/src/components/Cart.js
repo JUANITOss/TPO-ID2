@@ -1,76 +1,120 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import api from '../api';
 
 const Cart = () => {
-  const [carrito, setCarrito] = useState(null); // Inicializamos el carrito como null
-  const [loading, setLoading] = useState(true); // Estado para manejar la carga de datos
+  const { userId } = useParams();
+  const [carrito, setCarrito] = useState(null);
+  const [nuevoProducto, setNuevoProducto] = useState({
+    productoId: '',
+    nombreProducto: '',
+    cantidad: 1,
+    precioUnitario: 0,
+  });
 
   useEffect(() => {
-    const fetchCart = async () => {
+    const fetchCarrito = async () => {
       try {
-        const response = await api.get('/carritos/mi-carrito');
-        setCarrito(response.data);
+        const response = await api.get(`/carritos/${userId}`);
+        setCarrito(response.data[0] || { cartId: null, productos: [] });
       } catch (error) {
-        console.error('Error al cargar el carrito:', error);
-      } finally {
-        setLoading(false);
+        console.error('Error al obtener el carrito:', error);
       }
     };
+    fetchCarrito();
+  }, [userId]);
 
-    fetchCart();
-  }, []);
+  const handleAgregarProducto = async () => {
+    if (!carrito.cartId) {
+      console.error('No se puede agregar producto. Carrito no encontrado.');
+      return;
+    }
 
-  if (loading) {
-    return <div>Cargando...</div>; // Indicador de carga
-  }
-
-  if (!carrito || !carrito.items) {
-    return <div>No hay productos en el carrito</div>; // Mensaje cuando el carrito está vacío o no se carga
-  }
-
-  const handleAddProduct = async (productId) => {
     try {
-      const response = await api.post(`/carritos/agregar/${productId}`);
+      const response = await api.post(`/carritos/${carrito.cartId}/productos`, nuevoProducto);
       setCarrito(response.data);
+      setNuevoProducto({ productoId: '', nombreProducto: '', cantidad: 1, precioUnitario: 0 });
     } catch (error) {
       console.error('Error al agregar producto:', error);
     }
   };
 
-  const handleRemoveProduct = async (productId) => {
+  const handleEliminarProducto = async (productoId) => {
+    if (!carrito.cartId) {
+      console.error('No se puede eliminar producto. Carrito no encontrado.');
+      return;
+    }
+
     try {
-      const response = await api.post(`/carritos/eliminar/${productId}`);
+      const response = await api.delete(`/carritos/${carrito.cartId}/productos/${productoId}`);
       setCarrito(response.data);
     } catch (error) {
       console.error('Error al eliminar producto:', error);
     }
   };
 
-  const handleChangeQuantity = async (productId, quantity) => {
+  const handleActualizarCantidad = async (productoId, cantidad) => {
+    if (!carrito.cartId) {
+      console.error('No se puede actualizar la cantidad del producto. Carrito no encontrado.');
+      return;
+    }
+
     try {
-      const response = await api.post(`/carritos/cambiar-cantidad/${productId}`, { quantity });
+      const response = await api.put(`/carritos/${carrito.cartId}/productos/${productoId}`, { cantidad });
       setCarrito(response.data);
     } catch (error) {
-      console.error('Error al cambiar cantidad de producto:', error);
+      console.error('Error al actualizar cantidad:', error);
     }
   };
+
+  if (!carrito) {
+    return <div>Cargando...</div>;
+  }
 
   return (
     <div>
       <h2>Carrito de Compras</h2>
-      {carrito.items.map((item) => (
-        <div key={item.productId}>
-          <h3>{item.productName}</h3>
-          <p>Cantidad: {item.quantity}</p>
-          <button onClick={() => handleAddProduct(item.productId)}>Agregar</button>
-          <button onClick={() => handleRemoveProduct(item.productId)}>Eliminar</button>
-          <input
-            type="number"
-            value={item.quantity}
-            onChange={(e) => handleChangeQuantity(item.productId, e.target.value)}
-          />
-        </div>
-      ))}
+      <ul>
+        {carrito.productos.map(producto => (
+          <li key={producto.productoId}>
+            {producto.nombreProducto} - {producto.cantidad} x {producto.precioUnitario}
+            <button onClick={() => handleEliminarProducto(producto.productoId)}>Eliminar</button>
+            <input
+              type="number"
+              value={producto.cantidad}
+              onChange={(e) => handleActualizarCantidad(producto.productoId, parseInt(e.target.value))}
+            />
+          </li>
+        ))}
+      </ul>
+      <div>
+        <h3>Agregar Nuevo Producto</h3>
+        <input
+          type="text"
+          placeholder="ID del Producto"
+          value={nuevoProducto.productoId}
+          onChange={(e) => setNuevoProducto({ ...nuevoProducto, productoId: e.target.value })}
+        />
+        <input
+          type="text"
+          placeholder="Nombre del Producto"
+          value={nuevoProducto.nombreProducto}
+          onChange={(e) => setNuevoProducto({ ...nuevoProducto, nombreProducto: e.target.value })}
+        />
+        <input
+          type="number"
+          placeholder="Cantidad"
+          value={nuevoProducto.cantidad}
+          onChange={(e) => setNuevoProducto({ ...nuevoProducto, cantidad: parseInt(e.target.value) })}
+        />
+        <input
+          type="number"
+          placeholder="Precio Unitario"
+          value={nuevoProducto.precioUnitario}
+          onChange={(e) => setNuevoProducto({ ...nuevoProducto, precioUnitario: parseFloat(e.target.value) })}
+        />
+        <button onClick={handleAgregarProducto}>Agregar Producto</button>
+      </div>
     </div>
   );
 };
