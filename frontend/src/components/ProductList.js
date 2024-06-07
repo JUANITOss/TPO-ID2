@@ -6,8 +6,12 @@ const ProductList = () => {
 
   useEffect(() => {
     const fetchProductos = async () => {
-      const response = await api.get('/productos');
-      setProductos(response.data);
+      try {
+        const response = await api.get('/productos');
+        setProductos(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
     };
 
     fetchProductos();
@@ -16,24 +20,28 @@ const ProductList = () => {
   return (
     <div>
       <h2>Catálogo de Productos</h2>
-      <ul>
-        {productos.map(producto => (
-          <li key={producto.productId}>
-            {producto.nombreProducto} - Precio: {producto.precio}
-            <br />
-            {producto.descripcion}
-            <br />
-            <img src={producto.fotos[0]} alt={producto.nombreProducto} width="100" />
-            <br />
-            {producto.videos.map(video => (
-              <video key={video} width="200" controls>
-                <source src={video} type="video/mp4" />
-                 Your browser does not support the video tag.
-              </video>
-            ))}
-          </li>
-        ))}
-      </ul>
+      {productos.length === 0 ? (
+        <p>No hay productos disponibles.</p>
+      ) : (
+        <ul>
+          {productos.map(producto => (
+            <li key={producto.productId}>
+              {producto.nombreProducto} - Precio: {producto.precio}
+              <br />
+              {producto.descripcion}
+              <br />
+              <img src={producto.fotos[0]} alt={producto.nombreProducto} width="100" />
+              <br />
+              {producto.videos.map(video => (
+                <video key={video} width="200" controls>
+                  <source src={video} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ))}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

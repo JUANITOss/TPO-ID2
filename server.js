@@ -4,8 +4,6 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require("express-session");
-const redis = require("redis");
-const RedisStore = require("connect-redis").default;
 
 // URLS
 const userRoutes = require('./routes/user');
@@ -16,23 +14,12 @@ const invoiceRoutes = require('./routes/invoice');
 
 const app = express();
 
-// Conectar a Redis
-const redisClient = redis.createClient({
-  url: "redis://localhost:6379",
-});
-
-redisClient.on('error', err => console.log('Error conectando a Redis: ', err));
-
-redisClient.connect();
-
-let redisStore = new RedisStore({
-  client: redisClient,
-});
-
 // Conectar a MongoDB
 const connectDB = async () => {
   try {
     await mongoose.connect('mongodb://localhost:27017/tienda');
+    console.log('Conectado a MongoDB');
+
   } catch (error) {
     console.error('Error conectando a MongoDB: ', error);
     process.exit(1);
@@ -40,14 +27,11 @@ const connectDB = async () => {
 };
 connectDB();
 
-console.log('Conectado a MongoDB y Redis');
-
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use(
   session({
-    store: redisStore,
     secret: "PWD",
     resave: false,
     saveUninitialized: false,
@@ -56,7 +40,6 @@ app.use(
  );
 
  // Rutas
-app.use('/usuarios', userRoutes);
 app.use('/carritos', cartRoutes);
 app.use('/pedidos', orderRoutes);
 app.use('/facturas', invoiceRoutes);

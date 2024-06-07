@@ -6,31 +6,43 @@ const OrderList = ({ userId }) => {
 
   useEffect(() => {
     const fetchOrders = async () => {
-      const response = await api.get(`/pedidos/${userId}`);
-      setOrders(response.data);
+      try {
+        const response = await api.get(`/pedidos/${userId}`);
+        setOrders(response.data);
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
     };
 
     fetchOrders();
   }, [userId]);
 
   const facturarPedido = async (orderId) => {
-    const response = await api.post(`/pedidos/${orderId}/factura`);
-    alert('Pedido facturado con éxito');
-    const updatedOrders = orders.map(order => order.orderId === orderId ? response.data : order);
-    setOrders(updatedOrders);
+    try {
+      const response = await api.post(`/pedidos/${orderId}/factura`);
+      alert('Pedido facturado con éxito');
+      const updatedOrders = orders.map(order => order.orderId === orderId ? response.data : order);
+      setOrders(updatedOrders);
+    } catch (error) {
+      console.error('Error facturando pedido:', error);
+    }
   };
 
   return (
     <div>
       <h2>Pedidos</h2>
-      <ul>
-        {orders.map(order => (
-          <li key={order.orderId}>
-            Pedido ID: {order.orderId} - Estado: {order.estado}
-            <button onClick={() => facturarPedido(order.orderId)}>Facturar</button>
-          </li>
-        ))}
-      </ul>
+      {orders.length === 0 ? (
+        <p>No hay pedidos por realizar.</p>
+      ) : (
+        <ul>
+          {orders.map(order => (
+            <li key={order.orderId}>
+              Pedido ID: {order.orderId} - Estado: {order.estado}
+              <button onClick={() => facturarPedido(order.orderId)}>Facturar</button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
