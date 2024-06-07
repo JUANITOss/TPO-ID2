@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
 });
 
 // Obtener usuarios
-router.get('/', async (req, res) => {
+router.get('/', async (res) => {
   const usuarios = await User.find();
   res.send(usuarios);
 });
