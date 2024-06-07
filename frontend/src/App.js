@@ -33,11 +33,12 @@ function App() {
     <Router>
       <div>
         <Routes>
+          <Route path="/" element={<React.Fragment><Login /><Register /></React.Fragment>} />
           <Route path="/carrito/:userId" element={<ProtectedRoute element={<Cart />} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/logout" element={<Logout />} />
-          {/* Agregar las otras rutas que nos faltan (Productos, Pedidos, Admins, Invoice) */}
+          {/* Otras rutas que tengas */}
         </Routes>
       </div>
     </Router>
