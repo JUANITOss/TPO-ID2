@@ -30,7 +30,7 @@ const connectDB = async () => {
     console.log('Conectado a MongoDB');
   } catch (error) {
     console.error('Error conectando a MongoDB:', error);
-    process.exit(1); // Salir del proceso con error
+    process.exit(1);
   }
 };
 connectDB();
@@ -43,7 +43,7 @@ app.use(session({
   secret: 'your-secret-key',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false } // Cambiar a true si usas HTTPS
+  cookie: { secure: false } // Cambiar a true si cambiamos a HTTPS!!!
 }));
 
 // Rutas

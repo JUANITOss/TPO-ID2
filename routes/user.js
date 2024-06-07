@@ -1,49 +1,36 @@
 const express = require('express');
-const User = require('../models/User');
 const router = express.Router();
+const User = require('../models/User'); // Asegúrate de tener un modelo de usuario
 
-// Registrar usuario
-router.post('/', async (req, res) => {
-  const usuario = new User(req.body);
-  await usuario.save();
-  res.send(usuario);
+// Ruta de login
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  
+  const user = await User.findOne({ username });
+  if (!user || user.password !== password) {
+    return res.status(401).send({ message: 'Credenciales incorrectas' });
+  }
+
+  req.session.userId = user._id;
+  res.send({ userId: user._id });
 });
 
-// Obtener usuarios
-router.get('/', async (res) => {
-  const usuarios = await User.find();
-  res.send(usuarios);
+// Ruta de logout
+router.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).send({ message: 'Error al cerrar sesión' });
+    }
+    res.send({ message: 'Sesión cerrada correctamente' });
+  });
 });
 
-// Actualizar tiempo de conexión
-router.post('/:userId/tiempo', async (req, res) => {
-  const { minutos } = req.body;
-  const usuario = await User.findOne({ userId: req.params.userId });
-
-  if (usuario) {
-    const fecha = new Date().toISOString().split('T')[0];
-    let registro = usuario.tiempoConectado.find(t => t.fecha === fecha);
-
-    if (registro) {
-      registro.minutos += minutos;
-    } else {
-      usuario.tiempoConectado.push({ fecha, minutos });
-    }
-
-    const totalMinutos = usuario.tiempoConectado.reduce((acc, t) => acc + t.minutos, 0);
-
-    if (totalMinutos > 240) {
-      usuario.categoria = 'TOP';
-    } else if (totalMinutos > 120) {
-      usuario.categoria = 'MEDIUM';
-    } else {
-      usuario.categoria = 'LOW';
-    }
-
-    await usuario.save();
-    res.send(usuario);
+// Ruta para verificar sesión
+router.get('/session', (req, res) => {
+  if (req.session.userId) {
+    res.send({ userId: req.session.userId });
   } else {
-    res.status(404).send({ message: 'Usuario no encontrado' });
+    res.status(401).send({ message: 'No autenticado' });
   }
 });
 
