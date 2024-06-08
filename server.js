@@ -3,16 +3,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const session = require("express-session");
+const redis = require('redis');
+
+//Initialization de app
+const app = express();
 
 // URLS
-const userRoutes = require('./routes/user');
 const cartRoutes = require('./routes/cart');
 const orderRoutes = require('./routes/order');
 const productRoutes = require('./routes/product');
 const invoiceRoutes = require('./routes/invoice');
-
-const app = express();
 
 // Conectar a MongoDB
 const connectDB = async () => {
@@ -27,17 +27,32 @@ const connectDB = async () => {
 };
 connectDB();
 
-// Middleware
+// Conectar a Redis
+const client = redis.createClient();
+
+client.on('error', (err) => {
+  console.error('Redis error:', err);
+});
+
+client.on('connect', () => {
+  console.log('Conectado a Redis');
+});
+
+client.connect().catch(console.error);
+
+// Middleware interaccion
 app.use(cors());
 app.use(bodyParser.json());
-app.use(
-  session({
-    secret: "PWD",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {secure: false,}, // CAMBIARLO A TRUE SI USAMOS HTTPS
- })
- );
+
+// Middleware de los clientes
+app.use((req, res, next) => {
+  req.redisClient = client;
+  next();
+});
+app.use((req, res, next) => {
+  req.db = mongoose.connection;
+  next();
+});
 
  // Rutas
 app.use('/carritos', cartRoutes);
