@@ -13,6 +13,8 @@ const cartRoutes = require('./routes/cart');
 const orderRoutes = require('./routes/order');
 const productRoutes = require('./routes/product');
 const invoiceRoutes = require('./routes/invoice');
+const registerRoutes = require('./routes/register');
+const loginRoutes = require('./routes/login');
 
 // Conectar a MongoDB
 const connectDB = async () => {
