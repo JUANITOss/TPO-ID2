@@ -11,15 +11,15 @@ router.post('/', async (req, res) => {
   }
 
   // Convertir a string (Si no se hace, dni causa problemas)
-  const userData = {
-    username: String(username),
-    password: String(password),
-    dni: String(dni),
-    direccion: String(direccion)
-  };
+const userData = {
+  'username': String(username),
+  'password': String(password),
+  'dni': String(dni),
+  'direccion': String(direccion)
+};
 
   // Almacenar los datos como un hash en Redis
-  req.redisClient.hmset('users', username, userData, (err, reply) => {
+  req.redisClient.HSET('users', username, JSON.stringify(userData), (err, reply) => {
     if (err) {
       return res.status(500).json({ error: 'Error registering user' });
     }

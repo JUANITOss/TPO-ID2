@@ -11,7 +11,14 @@ const Register = () => {
   const handleRegister = async () => {
     try {
       const response = await api.post('/register', { username, password, dni, direccion });
-      setMessage(response.data.message);
+      
+      if (response.status === 204) {
+        setMessage('User registered successfully');
+      } else if (response.status == 200) {
+        setMessage('User already registered');
+      } else {   
+        setMessage(response.data.message);
+      };
     } catch (error) {
       setMessage(error.response ? error.response.data.error : 'Error registering user');
     }
@@ -25,7 +32,7 @@ const Register = () => {
       <input type="text" placeholder="DNI" value={dni} onChange={(e) => setDNI(e.target.value)} />
       <input type="text" placeholder="Direccion" value={direccion} onChange={(e) => setDireccion(e.target.value)} />
       <button onClick={handleRegister}>Register</button>
-      {message && <p>{message}</p>}
+      {<p>status: {message}</p>}
     </div>
   );
 };
