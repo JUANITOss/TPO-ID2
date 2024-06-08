@@ -15,6 +15,7 @@ const Login = () => {
       } else {
         setMessage(response.data.error);
       }
+      
     } catch (error) {
       setMessage(error.response ? error.response.data.error : 'Error logging in');
     }
