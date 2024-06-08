@@ -1,5 +1,4 @@
 const express = require('express');
-const bcrypt = require('bcryptjs');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
@@ -9,18 +8,20 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: 'Username and password are required' });
   }
 
-  req.redisClient.hGet('users', username, async (err, hashedPassword) => {
+  req.redisClient.HGET('users', username, async (err, storedPassword) => {
+    
+    // Errores generales
     if (err) {
       return res.status(500).json({ error: 'Error logging in' });
     }
-
-    if (!hashedPassword) {
+    
+    // Errores de escritura (no se encuentra ese dato en la DB)
+    if (!storedPassword) {
       return res.status(400).json({ error: 'Invalid username or password' });
     }
 
-    const isMatch = await bcrypt.compare(password, hashedPassword);
-
-    if (isMatch) {
+    // Comparar contraseñas
+    if (password === storedPassword) {
       res.status(200).json({ message: 'Login successful' });
     } else {
       res.status(400).json({ error: 'Invalid username or password' });

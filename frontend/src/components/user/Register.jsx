@@ -32,7 +32,7 @@ const Register = () => {
       <input type="text" placeholder="DNI" value={dni} onChange={(e) => setDNI(e.target.value)} />
       <input type="text" placeholder="Direccion" value={direccion} onChange={(e) => setDireccion(e.target.value)} />
       <button onClick={handleRegister}>Register</button>
-      {<p>status: {message}</p>}
+      {message && <p>status: {message}</p>}
     </div>
   );
 };
