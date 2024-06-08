@@ -9,6 +9,7 @@ const TestConnection = () => {
       try {
         const response = await axios.get('http://localhost:5000/api/test');
         setMessage(response.data.message);
+        console.log('yipeee');
       } catch (error) {
         setMessage('Error al conectar con el backend');
       }

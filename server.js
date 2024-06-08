@@ -43,8 +43,16 @@ client.on('connect', () => {
 client.connect().catch(console.error);
 
 // Middleware interaccion
-app.use(cors());
+// Configurar CORS
+app.use(cors({
+  origin: 'http://localhost:3000',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type'],
+  credentials: true,
+}));
+
 app.use(bodyParser.json());
+app.use(express.json());
 
 // Middleware de los clientes
 app.use((req, res, next) => {
@@ -61,6 +69,8 @@ app.use('/carritos', cartRoutes);
 app.use('/pedidos', orderRoutes);
 app.use('/facturas', invoiceRoutes);
 app.use('/productos', productRoutes);
+app.use('/register', registerRoutes);
+app.use('/login', loginRoutes);
 
 // Ruta de prueba
 app.get('/api/test', (req, res) => {
@@ -68,7 +78,7 @@ app.get('/api/test', (req, res) => {
 });
 
 // Iniciar el servidor
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });

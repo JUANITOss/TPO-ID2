@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/user/Login';
 import Register from './components/user/Register';
 import Home from './components/Home';
+import TestConnection from './components/TestConnection';
 
 // TODO
 // import Cart from './components/Cart';
@@ -21,6 +22,7 @@ function App() {
         <Route path='/' element= {<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path='/test' element={<TestConnection />} />
       </Routes>
     </div>
   </Router>
