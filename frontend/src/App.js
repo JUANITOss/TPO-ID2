@@ -6,6 +6,7 @@ import Login from './components/user/Login';
 import Register from './components/user/Register';
 import Home from './components/Home';
 import TestConnection from './components/TestConnection';
+import Main from './components/Main';
 
 // TODO
 // import Cart from './components/Cart';
@@ -23,6 +24,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path='/test' element={<TestConnection />} />
+        <Route path='/main' element={<Main />} />
       </Routes>
     </div>
   </Router>
