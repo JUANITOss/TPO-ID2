@@ -3,13 +3,13 @@ export default function Main() {
         <section className="w-full py-6 bg-slate-700">
             <div className="container mx-auto max-w-xl px-4 md:px-6 lg:max-w-none">
                 {/* Header Section */}
-                <headeer className="flex justify-between items-center mb-6">
+                <header className="flex justify-between items-center mb-6">
                     <div className="flex items-center gap-4">
                         <a href="#" className="text-white">Profile</a>
                         <a href="#" className="text-white">Logout</a>
                         <a href="#" className="text-white">Contact</a>
                     </div>
-                </headeer>
+                </header>
 
                 {/* Main Section */}
                 <div className="grid gap-6 md:gap-8">
@@ -38,7 +38,6 @@ export default function Main() {
                         </button>
                         </div>
                         <div className="flex items-center gap-2">
-                            {/* Placeholder for additional controls if needed */}
                         </div>
                     </div>
                     <div className="grid lg:grid-cols-3 gap-8">

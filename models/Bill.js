@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const InvoiceSchema = new mongoose.Schema({
-  invoiceId: String,
+const BillSchema = new mongoose.Schema({
+  BillId: String,
   orderId: String,
   userId: String,
   productos: [
@@ -26,4 +26,4 @@ const InvoiceSchema = new mongoose.Schema({
   ]
 });
 
-module.exports = mongoose.model('Invoice', InvoiceSchema);
+module.exports = mongoose.model('Bill', BillSchema);

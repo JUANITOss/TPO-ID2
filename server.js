@@ -12,7 +12,7 @@ const app = express();
 const cartRoutes = require('./routes/cart');
 const orderRoutes = require('./routes/order');
 const productRoutes = require('./routes/product');
-const invoiceRoutes = require('./routes/invoice');
+const invoiceRoutes = require('./routes/bill');
 const registerRoutes = require('./routes/register');
 const loginRoutes = require('./routes/login');
 
@@ -65,10 +65,10 @@ app.use((req, res, next) => {
 });
 
  // Rutas
-app.use('/carritos', cartRoutes);
-app.use('/pedidos', orderRoutes);
-app.use('/facturas', invoiceRoutes);
-app.use('/productos', productRoutes);
+app.use('/cart', cartRoutes);
+app.use('/order', orderRoutes);
+app.use('/bill', invoiceRoutes);
+app.use('/product', productRoutes);
 app.use('/register', registerRoutes);
 app.use('/login', loginRoutes);
 
