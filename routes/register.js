@@ -19,13 +19,12 @@ const userData = {
 };
 
   // Almacenar los datos como un hash en Redis
-  req.redisClient.HSET('users', username, JSON.stringify(userData), (err, reply) => {
-    if (err) {
+  try {
+    await req.redisClient.HSET('users', username, JSON.stringify(userData));
+    return res.status(201).json({ message: 'User registered successfully' });  
+  } catch(err) {
       return res.status(500).json({ error: 'Error registering user' });
-    }
-
-    res.status(201).json({ message: 'User registered successfully' });
-  });
+  }
 });
 
 

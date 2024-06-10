@@ -7,13 +7,14 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
       const response = await api.post('/login', { username, password });
       
       if (response.status === 200) {
         setMessage('Login successful');
-        <Link to="/main"></Link>
+        window.location="/Main";
       } else {
         setMessage(response.data.error);
       }

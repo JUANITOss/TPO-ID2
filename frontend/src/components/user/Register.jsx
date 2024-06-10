@@ -13,10 +13,10 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await api.post('/register', { username, password, dni, direccion });
-      
-      if (response.status === 204) {
+      if (response.status === 201) {
         setMessage('User registered successfully');
-        <Link to="/Main"></Link>
+        window.location="/Main";
+        
       } else if (response.status === 200) {
         setMessage('User already registered');
       } else {   
