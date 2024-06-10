@@ -46,8 +46,8 @@ client.connect().catch(console.error);
 // Configurar CORS
 app.use(cors({
   origin: 'http://localhost:3000',
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type'],
+  //methods: ['GET', 'POST'],
+  //allowedHeaders: ['Content-Type'],
   credentials: true,
 }));
 
