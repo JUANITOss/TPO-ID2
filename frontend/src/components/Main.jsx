@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Main() {
     return (
         <section className="w-full py-6 bg-slate-700">
@@ -5,9 +7,24 @@ export default function Main() {
                 {/* Header Section */}
                 <header className="flex justify-between items-center mb-6">
                     <div className="flex items-center gap-4">
-                        <a href="#" className="text-white">Profile</a>
-                        <a href="#" className="text-white">Logout</a>
-                        <a href="#" className="text-white">Contact</a>
+                    <button class="flex items-center text-white bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"></path>
+                            <path d="M16 16.5c-1.34-.8-2.88-1.5-4.5-1.5s-3.16.7-4.5 1.5"></path>
+                            <path d="M0 0h24v24H0z" fill="none"></path>
+                        </svg>
+                        <span class="ml-2">Profile</span>
+                    </button>
+                        <Link to="/">
+                            <button class="flex items-center text-white bg-red-500 px-4 py-2 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-75">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+                                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
+                                    <polyline points="16 17 21 12 16 7"></polyline>
+                                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                                </svg>
+                                <span class="ml-2">Logout</span>
+                            </button>
+                        </Link>
                     </div>
                 </header>
 
@@ -99,7 +116,7 @@ export default function Main() {
                                 <h3 className="font-semibold">Sprite</h3>
                                 <p className="text-sm leading-none">Heat Happens</p>
                                 <div className="flex items-center justify-between">
-                                    <p className="font-bold">$199.99</p>
+                                    <p className="font-bold">$999.99</p>
                                     <div className="flex items-center gap-2">
                                         <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
                                             <svg
@@ -141,7 +158,7 @@ export default function Main() {
                                 <h3 className="font-semibold">Paso de los Toros</h3>
                                 <p className="text-sm leading-none">Arrolla la sed</p>
                                 <div className="flex items-center justify-between">
-                                    <p className="font-bold">$79.99</p>
+                                    <p className="font-bold">$999.99</p>
                                     <div className="flex items-center gap-2">
                                         <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
                                             <svg
@@ -183,7 +200,7 @@ export default function Main() {
                                 <h3 className="font-semibold">Aquarius</h3>
                                 <p className="text-sm leading-none">Lo natural, te hace más natural</p>
                                 <div className="flex items-center justify-between">
-                                    <p className="font-bold">$49.99</p>
+                                    <p className="font-bold">$999.99</p>
                                     <div className="flex items-center gap-2">
                                         <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
                                             <svg

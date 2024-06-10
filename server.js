@@ -68,7 +68,7 @@ app.use((req, res, next) => {
 //app.use('/cart', cartRoutes);
 //app.use('/order', orderRoutes);
 //app.use('/bill', invoiceRoutes);
-app.use('/product', productRoutes);
+//app.use('/product', productRoutes);
 app.use('/register', registerRoutes);
 app.use('/login', loginRoutes);
 
