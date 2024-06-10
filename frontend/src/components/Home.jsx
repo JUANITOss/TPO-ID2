@@ -2,40 +2,33 @@ import { Link } from "react-router-dom";
 
 export default function Home(){
   return (
-    <div class="flex flex-col min-h-[100dvh]">
-  <section class="py-32 w-full h-fit overflow-hidden bg-slate-700 bg-cover bg-center h-64 w-full">
-    {/* <img
-      src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ8NDQ0NFREWFhURFRUYHSggGBolGxUVIT0hJSkrLi4uFx8zODMtNygtLisBCgoKDQ0NDg0NDi0ZFRkrKystLS0rKy0rKysrLSstKysrKy0rKysrKysrKysrKy0tKysrKy0rKysrKysrKysrK//AABEIAKgBLAMBIgACEQEDEQH/xAAbAAADAQADAQAAAAAAAAAAAAAAAQIDBAUHBv/EACUQAQEBAQACAQMDBQAAAAAAAAABEQIDEiEEMVEFQXEiMmGRof/EABYBAQEBAAAAAAAAAAAAAAAAAAABAv/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/APIoqJio0ioqJioBxcRFwRUVExcBUVExcgKjTlEacqLiomHAXKqIipQXFSolOURelpaIBgFaAtR1TtRaCemdV1UUVNRV1FBNRV1NQKFYYBn1EWNemdBnYitOmdFTUVdqQEOA4BxUTFQFRcTFQRUXERpAVyuJkXFDi5URUBcqpUQ4DSK1Ep6C9PUSjQXpyo0tBppWo9k3oFXpFpWlaAtRadqbQK1NotLQFTTqUAVFqbQLqs7VVFBNRVVNFSRgBioRgqGUVAOLiYqCKjTlEXAXytHKooIuFFSAZgAcNJ6CtGp0tBelanRoHpWptLQO0rS1NoHam0WptAWp0WlagNK0itA7U0UgKoqqmgmkdIVNBgAAcA4qJi4IaolUBUaRnFwFxcZ6rmqNYpnF6B6Wp0aCtGp0aC9LS0tBWlpC0D1NGptAaVotTagLStKpA7SpaVoHpFam0DtLStToKtTaVpWiijSpaBghoGcIwUcSYi4qIlVKC4qM9VKDRXLPVSg1lPUc0VRRaRAvQg9BQ1Oi0FaNRo1BWptLU2gq1NpWptBVqbStLQOptFqbQPU2i0qA1OgrRRpWkAAIADIAsFoBR6nQC5Vys4eiL1XNZarmg11UZ6qUGvNPUSi0FaLUymBwtBWgei1OloK0tTpaC7U6WloHpWlaWgeloqbQGloqdA7SIaKCBACAAAAAAAMEYA5UmCjTo0DVEnKDSVcrKU5RGsqmPsfsDSVUrKVWg01NL2LQPS1OloK0tTpaCtLS0rQVpanS0VelS0aBUjKgVIAAAAIGQAAAAABgACoFID0aQBWnpADlVKgSg0Gp09BUp+yS0GmjUSjRF6VLQA0tKgU9KlaWgelpaQK0anRoK0i0aAAAGCMAQAAAAAAAMDAFSrBgEMPBgADAAwAAcGlDoDRpAD0SkAXo1GgFWlqQAo0qAGjRhAZAAYIAYIwMEYAAACAAAAF4YMCAMCwGAIsWQJwKIEhdibAIAAAABAyAAACEMAZUFQIAAAAAAAGCMAZAHM/T/o55bb31efHzZLk3rrr7+vM/h33i+g+m9Znj46n22/1Xf5v7ul/T/L68WW8Xjq7/AHTnrm5Z+8syz8q8meWde3l4kvk56nPvMnxOd2/Nufx+UHZfV/p/085uePmdfffaz1/zmvnvLzJ11ObvM6sl/M34rndeHnyet8nl59pzzz1b3xvxxub878/GuD3zlsn2ls+8v/QUAFAAAMAARgAQAA0gAVIAAAABGABGAIAARAAAAAACAIADMBQCT8QwA9b+L/ogAGjTAP/Z"
-      width="1920"
-      height="1080"
-      class="absolute inset-0 w-full h-full object-cover"
-      //style="aspect-ratio: 1920 / 1080; object-fit: cover;"
-    /> */}
-    <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
-    <div class="relative h-full flex flex-col items-center justify-center text-center text-white space-y-6 px-4 md:px-6">
-      <h1 class="text-4xl md:text-6xl font-bold tracking-tight">Refresh Your Time</h1>
-      <p class="text-lg md:text-xl">
+    <div className="flex flex-col min-h-[100dvh]">
+  <section className="py-32 w-full h-fit overflow-hidden bg-slate-700 bg-cover bg-center h-64 w-full">
+    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
+    <div className="relative h-full flex flex-col items-center justify-center text-center text-white space-y-6 px-4 md:px-6">
+      <h1 className="text-4xl md:text-6xl font-bold tracking-tight">Refresh Your Time</h1>
+      <p className="text-lg md:text-xl">
         Refresh with the best products
       </p>
-      <div class="flex flex-col sm:flex-row gap-4">
+      <div className="flex flex-col sm:flex-row gap-4">
         <Link to='/register'>
-          <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-11 rounded-md px-8">
+          <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-11 rounded-md px-8">
             Register
           </button>
         </Link>
         <Link to='/login'>
-          <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-11 rounded-md px-8">
+          <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-11 rounded-md px-8">
             Login   
           </button>
         </Link>
       </div>
     </div>
   </section>
-  <section class="py-32 w-full h-fit overflow-hidden bg-gradient-to-r from-sky-400 to-indigo-600 bg-cover bg-center h-64 w-full">
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 px-6">
+  <section className="py-32 w-full h-fit overflow-hidden bg-gradient-to-r from-sky-400 to-indigo-600 bg-cover bg-center h-64 w-full">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 px-6">
       <a
         href="#"
-        class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2"
+        className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2"
       >
         <img
           src="data:image/png;base64,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"
@@ -43,16 +36,16 @@ export default function Home(){
           width="400"
           height="300"
           //style="aspect-ratio: 400 / 300; object-fit: cover;"
-          class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
+          className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
         />
-        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
-          <h3 class="text-lg font-semibold">Coca-Cola</h3>
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+          <h3 className="text-lg font-semibold">Coca-Cola</h3>
         </div>
       </a>
       <a
         href="#"
-        class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2"
+        className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2"
       >
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQId4en7VCdugVyrxp5OFU70mD-xWtWOLOP2A&s"
@@ -60,16 +53,16 @@ export default function Home(){
           width="400"
           height="300"
           //style="aspect-ratio: 400 / 300; object-fit: cover;"
-          class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
+          className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
         />
-        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
-          <h3 class="text-lg font-semibold">Sprite</h3>
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+          <h3 className="text-lg font-semibold">Sprite</h3>
         </div>
       </a>
       <a
         href="#"
-        class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2"
+        className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2"
       >
         <img
           src="data:image/png;base64,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"
@@ -77,15 +70,15 @@ export default function Home(){
           width="400"
           height="300"
           //style="aspect-ratio: 400 / 300; object-fit: cover;"
-          class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
+          className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
         />
-        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
-          <h3 class="text-lg font-semibold">Paso de los Toros</h3>
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+          <h3 className="text-lg font-semibold">Paso de los Toros</h3>
         </div>
       </a>
       <a
-        class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2"
+        className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2"
         href="#"
       >
         <img
@@ -94,11 +87,11 @@ export default function Home(){
           width="400"
           height="300"
           //style="aspect-ratio: 400 / 300; object-fit: cover;"
-          class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
+          className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
         />
-        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
-          <h3 class="text-lg font-semibold">Aquarius</h3>
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+          <h3 className="text-lg font-semibold">Aquarius</h3>
         </div>
       </a>
     </div>
