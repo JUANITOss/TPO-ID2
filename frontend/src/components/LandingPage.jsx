@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function Home(){
+export default function LandingPage(){
   return (
     <div className="flex flex-col min-h-[100dvh]">
   <section className="py-32 w-full h-fit overflow-hidden bg-slate-700 bg-cover bg-center h-64 w-full">
