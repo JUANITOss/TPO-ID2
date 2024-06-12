@@ -1,32 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './estilosCSS/Main.css'; // Ruta correcta para importar el archivo CSS
 
 const Main = () => {
   return (
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/add-product">Crear Producto</Link>
-            </li>
-            <li>
-              <Link to="/list-product">Ver Productos</Link>
-            </li>
-            <li>
-                <Link to="/update-product/:productId">Actualizar Productos</Link>  
-            </li>
-            <li>
-                <Link to="/info-cart">Ver Carrito</Link>  
-            </li>
-          </ul>
-        </nav>
-      </div>
-
+    <div className="main-container">
+      <nav>
+        <ul className="nav-list">
+          <li>
+            <Link to="/add-product" className="nav-link">Crear Producto</Link>
+          </li>
+          <li>
+            <Link to="/list-product" className="nav-link">Ver Productos</Link>
+          </li>
+          <li>
+            <Link to="/update-product" className="nav-link">Actualizar Productos</Link>
+          </li>
+        </ul>
+      </nav>
+    </div>
   );
 };
 
-
-// NO ME VUELVAS A CAGAR LA MAIN PAGE PORQUE TE JURO Q TE METO UNA MANO EN EL OJETE
-// Y USA UNA STYLESHEET Q PARA ESO EXISTEN BESTIA DE LAS MALAS PRACTICAS
-// VUELVO A VER 89Q23875237 DIVS CON ESTILO EN HTML Y ME SUICIDO
 export default Main;
