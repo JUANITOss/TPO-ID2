@@ -5,9 +5,24 @@ const router = express.Router();
 
 // Añadir producto
 router.post('/addProduct', async (req, res) => {
-  const producto = new Product(req.body);
-  await producto.save();
-  res.send(producto);
+  const { nombreProducto } = req.body;
+
+  try {
+    // Verificar si ya existe un producto con el mismo nombre
+    const existingProduct = await Product.findOne({ nombreProducto });
+
+    if (existingProduct) {
+      return res.status(400).json({ error: 'Ya existe un producto con este nombre' });
+    }
+
+    // Si no existe, creamos un nuevo producto y lo guardamos
+    const nuevoProducto = new Product({ nombreProducto });
+    await nuevoProducto.save();
+
+    res.status(201).json(nuevoProducto);
+  } catch (error) {
+    res.status(500).json({ error: 'Hubo un error al intentar agregar el producto' });
+  }
 });
 
 // Obtener productos
