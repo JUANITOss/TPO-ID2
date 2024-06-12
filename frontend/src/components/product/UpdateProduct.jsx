@@ -43,7 +43,7 @@ const UpdateProduct = () => {
   const handleUpdateProduct = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.put(`/product/updateProduct/${selectedProduct.productId}`, productData);
+      const response = await api.put(`/product/updateProduct/${selectedProduct._id}`, productData);
       console.log('Producto actualizado:', response.data);
       navigate('/'); // Redirigir a la lista de productos después de actualizar
     } catch (error) {
