@@ -16,6 +16,9 @@ const Main = () => {
           <li>
             <Link to="/update-product" className="nav-link">Actualizar Productos</Link>
           </li>
+          <li>
+            <Link to="/info-cart" className="nav-link">Ver Carrito</Link>
+          </li>
         </ul>
       </nav>
     </div>
