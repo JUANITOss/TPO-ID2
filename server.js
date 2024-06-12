@@ -28,10 +28,8 @@ app.use(session({
 
 function autenticar(req, res, next) {
   if (req.session.userId) {
-    // Si el usuario está autenticado, continuar con la siguiente función
     next();
   } else {
-    // Si el usuario no está autenticado, redirigir al login
     res.redirect('/login');
   }
 }
