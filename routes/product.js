@@ -1,5 +1,6 @@
 const express = require('express');
 const Product = require('../models/Product');
+const Cart = require('../models/Cart');
 const router = express.Router();
 
 // Crear producto
@@ -25,8 +26,6 @@ router.put('/:productId', async (req, res) => {
 
     producto.nombreProducto = nombreProducto;
     producto.descripcion = descripcion;
-    producto.fotos = fotos;
-    producto.videos = videos;
     producto.precio = precio;
     producto.historialPrecios.push({ fechaCambio: new Date(), precioAnterior, precioNuevo: precio, operador });
 

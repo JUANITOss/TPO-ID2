@@ -66,7 +66,7 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-
+s
 // Middleware de los clientes
 app.use((req, res, next) => {
   req.redisClient = client;
@@ -78,12 +78,15 @@ app.use((req, res, next) => {
 });
 
  // Rutas
-//app.use('/cart', cartRoutes);
-//app.use('/order', orderRoutes);
-//app.use('/bill', invoiceRoutes);
-//app.use('/product', productRoutes);
 app.use('/register', registerRoutes);
 app.use('/login', loginRoutes);
+ 
+
+app.use('/product', productRoutes);
+
+app.use('/cart', cartRoutes);
+//app.use('/order', orderRoutes);
+//app.use('/bill', invoiceRoutes);
 
 // Ruta de prueba
 app.get('/api/test', (req, res) => {

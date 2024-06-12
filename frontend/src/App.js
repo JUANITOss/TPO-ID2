@@ -7,13 +7,13 @@ import Register from './components/user/Register';
 import LandingPage from './components/LandingPage';
 import TestConnection from './components/TestConnection';
 import Main from './components/Main';
-import Cart from './components/Cart';
+import CartInfo from './components/cart/CartInfo';
+import AddProduct from './components/products/AddProduct';
+import ProductList from './components/products/ProductList';
 
 // TODO
 // import Cart from './components/Cart';
-// import AddProduct from './components/AddProduct';
 // import OrderList from './components/OrderList';
-// import ProductList from './components/ProductList';
 // import TestConnection from './components/TestConnection';
 
 function App() {
@@ -26,7 +26,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path='/test' element={<TestConnection />} />
         <Route path='/main' element={<Main />} />
-        <Route path='/cart' element={<Cart />} />
+        <Route path='/cart-info' element={<CartInfo />} />
+        <Route path='/add-product' element={<AddProduct />} />
+        <Route path='/list-product' element={<ProductList />} />
       </Routes>
     </div>
   </Router>

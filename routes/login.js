@@ -33,7 +33,8 @@ router.post('/', async (req, res) => {
         estado: 'activo'
       });
 
-      req.session.userId = username;
+      // Acceder a la sesion desde las otras rutas
+      req.session.userId = username; 
 
       const nuevoCarrito = await newCart.save();
       return res.status(200).json({ message: 'Login successful' });

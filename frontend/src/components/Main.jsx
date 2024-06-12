@@ -1,281 +1,40 @@
-import { Link } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import AddProduct from './products/AddProduct';
+import ProductList from './products/ProductList';
+import UpdateProduct from './products/UpdateProduct';
+import CartInfo from './cart/CartInfo'; 
 
+const Main = () => {
+  return (
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/create-product">Crear Producto</Link>
+            </li>
+            <li>
+              <Link to="/products">Ver Productos</Link>
+            </li>
+            <li>
+              <Link to="/cart">Ver Carrito</Link>
+            </li>
+            <li>
+              <Link to="/update-product/:productId">Actualizar producto(proximamente)</Link>
+            </li>
+          </ul>
+        </nav>
 
-function SvgButton({ text, svgPath, onClick }) {
-    return (
-        <button
-            className="flex items-center text-white bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75"
-            onClick={onClick}
-        >
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-6 h-6"
-            >
-                {svgPath}
-            </svg>
-            <span className="ml-2">{text}</span>
-        </button>
-    );
-}
+        <Routes>
+          <Route path="/create-product" element={<AddProduct />} />
+          <Route path="/products" element={<ProductList />} />
+          <Route path="/update-product/:productId" element={<UpdateProduct />} />
+          <Route path="/cart" element={<CartInfo />} /> 
+        </Routes>
+      </div>
+    </Router>
+  );
+};
 
-export default function Main() {
-    return (
-        <section className="w-full py-6 bg-neutral-800 flex flex-col min-h-[100dvh]">
-            <div className="container mx-auto max-w-xl px-4 md:px-6 lg:max-w-none">
-                {/* Header Section */}
-                <header className="flex justify-between items-center mb-6">
-                    <div className="flex items-center gap-4">
-                    {/* <button class="flex items-center text-white bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"></path>
-                            <path d="M16 16.5c-1.34-.8-2.88-1.5-4.5-1.5s-3.16.7-4.5 1.5"></path>
-                            <path d="M0 0h24v24H0z" fill="none"></path>
-                        </svg>
-                        <span class="ml-2">Profile</span>
-                    </button> */}
-                        <Link to="/">
-                            <button className="flex items-center text-white bg-red-500 px-4 py-2 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-75">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-                                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
-                                    <polyline points="16 17 21 12 16 7"></polyline>
-                                    <line x1="21" y1="12" x2="9" y2="12"></line>
-                                </svg>
-                                <span className="ml-2">Logout</span>
-                            </button>
-                        </Link>
-                    </div>
-                </header>
-
-                {/* Main Section */}
-                <div className="grid gap-6 md:gap-8">
-                    <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8 justify-between">
-                        <div className="grid gap-1">
-                            <h1 className="text-3xl font-bold tracking-tight">Featured Products</h1>
-                            <p className="text-gray-500 dark:text-gray-400">Discover our latest and greatest products</p>
-                        </div>
-                        <div className="flex gap-4 w-full justify-end">
-                        {/* <button className="flex items-center text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-                                <circle cx="9" cy="21" r="1"></circle>
-                                <circle cx="20" cy="21" r="1"></circle>
-                                <path d="M1.5 1.5h2l3.6 13.5H19l1.4-6.5H6.5"></path>
-                            </svg>
-                            <span className="ml-2">Cart</span>
-                        </button>
-                        <button className="flex items-center text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-                                <path d="m21 16-4 4-4-4"></path>
-                                <path d="M17 20V4"></path>
-                                <path d="m3 8 4-4 4 4"></path>
-                                <path d="M7 4v16"></path>
-                            </svg>
-                            <span className="ml-2">Sort</span>
-                        </button> */}
-
-                        <SvgButton
-                                text="Cart"
-                                svgPath={
-                                    <>
-                                        <circle cx="9" cy="21" r="1"></circle>
-                                        <circle cx="20" cy="21" r="1"></circle>
-                                        <path d="M1.5 1.5h2l3.6 13.5H19l1.4-6.5H6.5"></path>
-                                    </>
-                                }
-                            />
-                            <SvgButton
-                                text="Sort"
-                                svgPath={
-                                    <>
-                                        <path d="m21 16-4 4-4-4"></path>
-                                        <path d="M17 20V4"></path>
-                                        <path d="m3 8 4-4 4 4"></path>
-                                        <path d="M7 4v16"></path>
-                                    </>
-                                }
-                            />
-                        </div>
-                        <div className="flex items-center gap-2">
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 bg-gradient-to-r from-sky-500 to-indigo-500">
-                        {/* Product Card 1 */}
-                        <div className="grid gap-4 relative group flex-shrink-0">
-                            <a className="absolute inset-0 z-10" href="#">
-                                <span className="sr-only">View</span>
-                            </a>
-                            <img
-                                src=""
-                                alt="Coca-Cola"
-                                width="450"
-                                height="300"
-                                className="rounded-lg object-cover w-full aspect-[3/2] group-hover:opacity-50 transition-opacity"
-                            />
-                            <div className="grid gap-1">
-                                <h3 className="font-semibold">Coca-Cola</h3>
-                                <p className="text-sm leading-none">Destapa la felicidad</p>
-                                <div className="flex items-center justify-between">
-                                    <p className="font-bold">$699.00</p>
-                                    <div className="flex items-center gap-2">
-                                        <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                className="w-4 h-4"
-                                            >
-                                                <circle cx="8" cy="21" r="1"></circle>
-                                                <circle cx="19" cy="21" r="1"></circle>
-                                                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
-                                            </svg>
-                                            Add to Cart
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Product Card 2 */}
-                        <div className="grid gap-4 relative group flex-shrink-0">
-                            <a className="absolute inset-0 z-10" href="#">
-                                <span className="sr-only">View</span>
-                            </a>
-                            <img
-                                src="/placeholder.svg"
-                                width="450"
-                                height="300"
-                                alt="Sprite"
-                                className="rounded-lg object-cover w-full aspect-[3/2] group-hover:opacity-50 transition-opacity"
-                            />
-                            <div className="grid gap-1">
-                                <h3 className="font-semibold">Sprite</h3>
-                                <p className="text-sm leading-none">Heat Happens</p>
-                                <div className="flex items-center justify-between">
-                                    <p className="font-bold">$999.99</p>
-                                    <div className="flex items-center gap-2">
-                                        <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                className="w-4 h-4"
-                                            >
-                                                <circle cx="8" cy="21" r="1"></circle>
-                                                <circle cx="19" cy="21" r="1"></circle>
-                                                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
-                                            </svg>
-                                            Add to Cart
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Product Card 3 */}
-                        <div className="grid gap-4 relative group flex-shrink-0">
-                            <a className="absolute inset-0 z-10" href="#">
-                                <span className="sr-only">View</span>
-                            </a>
-                            <img
-                                src="/placeholder.svg"
-                                alt="Paso de los Toros"
-                                width="450"
-                                height="300"
-                                className="rounded-lg object-cover w-full aspect-[3/2] group-hover:opacity-50 transition-opacity"
-                            />
-                            <div className="grid gap-1">
-                                <h3 className="font-semibold">Paso de los Toros</h3>
-                                <p className="text-sm leading-none">Arrolla la sed</p>
-                                <div className="flex items-center justify-between">
-                                    <p className="font-bold">$999.99</p>
-                                    <div className="flex items-center gap-2">
-                                        <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                className="w-4 h-4"
-                                            >
-                                                <circle cx="8" cy="21" r="1"></circle>
-                                                <circle cx="19" cy="21" r="1"></circle>
-                                                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
-                                            </svg>
-                                            Add to Cart
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Product Card 4 */}
-                        <div className="grid gap-4 relative group flex-shrink-0">
-                            <a className="absolute inset-0 z-10" href="#">
-                                <span className="sr-only">View</span>
-                            </a>
-                            <img
-                                src="/placeholder.svg"
-                                alt="Aquarius"
-                                width="450"
-                                height="300"
-                                className="rounded-lg object-cover w-full aspect-[3/2] group-hover:opacity-50 transition-opacity"
-                            />
-                            <div className="grid gap-1">
-                                <h3 className="font-semibold">Aquarius</h3>
-                                <p className="text-sm leading-none">Lo natural, te hace más natural</p>
-                                <div className="flex items-center justify-between">
-                                    <p className="font-bold">$999.99</p>
-                                    <div className="flex items-center gap-2">
-                                        <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                className="w-4 h-4"
-                                            >
-                                                <circle cx="8" cy="21" r="1"></circle>
-                                                <circle cx="19" cy="21" r="1"></circle>
-                                                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
-                                            </svg>
-                                            Add to Cart
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-}
+export default Main;
