@@ -10,24 +10,32 @@ const redis = require('redis');
 const app = express();
 
 // URLS
-
-
+const registerRoutes = require('./routes/register');
+const loginRoutes = require('./routes/login');
+const productRoutes = require('./routes/product');
+// const cartRoutes = require('./routes/cart');
 // const orderRoutes = require('./routes/order');
 // const billRoutes = require('./routes/bill');
 
-const productRoutes = require('./routes/product');
-const cartRoutes = require('./routes/cart');
-const registerRoutes = require('./routes/register');
-const loginRoutes = require('./routes/login');
 
 // Sesiones
-
 app.use(session({
   secret: "pwdx",
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false},
 }));
+
+function autenticar(req, res, next) {
+  if (req.session.userId) {
+    // Si el usuario está autenticado, continuar con la siguiente función
+    next();
+  } else {
+    // Si el usuario no está autenticado, redirigir al login
+    res.redirect('/login');
+  }
+}
+
 
 // Conectar a MongoDB
 const connectDB = async () => {
@@ -77,12 +85,25 @@ app.use((req, res, next) => {
   next();
 });
 
+// Middleware para verificar si el usuario está autenticado
+function verificarAutenticacion(req, res, next) {
+  if (req.session.userId) {
+    next();
+  } else {
+    res.status(401).send('No autenticado');
+  }
+}
+
+// Ruta protegida: perfil del usuario
+app.get('/perfil', verificarAutenticacion, (req, res) => {
+  res.status(200).send(`ID del usuario: ${req.session.userId}`);
+});
+
  // Rutas
 app.use('/register', registerRoutes);
 app.use('/login', loginRoutes);
 app.use('/product', productRoutes);
-app.use('/cart', cartRoutes);
-
+// app.use('/cart', cartRoutes);
 //app.use('/order', orderRoutes);
 //app.use('/bill', invoiceRoutes);
 

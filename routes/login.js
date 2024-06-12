@@ -17,6 +17,9 @@ router.post('/', async (req, res) => {
     const storedUser = await req.redisClient.HGET('users', username);
     const user = JSON.parse(storedUser);
     if (password === user.password) {
+      // Acceder a la sesion desde las otras rutas
+      req.session.userId = username; 
+            
       const existingCart = await Cart.findOne({ userId: username, estado: 'activo' });
 
       if (existingCart) {
@@ -32,9 +35,6 @@ router.post('/', async (req, res) => {
         productos: [],
         estado: 'activo'
       });
-
-      // Acceder a la sesion desde las otras rutas
-      req.session.userId = username; 
 
       const nuevoCarrito = await newCart.save();
       return res.status(200).json({ message: 'Login successful' });

@@ -25,10 +25,10 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path='/test' element={<TestConnection />} />
-        <Route path='/main' element={<Main />} />
+        <Route path='/main/*' element={<Main />} />
         <Route path='/cart-info' element={<CartInfo />} />
-        <Route path='/add-product' element={<AddProduct />} />
-        <Route path='/list-product' element={<ProductList />} />
+        <Route path='/product' element={<AddProduct />} />
+        <Route path='/product' element={<ProductList />} />
       </Routes>
     </div>
   </Router>

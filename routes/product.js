@@ -1,17 +1,17 @@
 const express = require('express');
 const Product = require('../models/Product');
-const Cart = require('../models/Cart')
+const Cart = require('../models/Cart');
 const router = express.Router();
 
 // Crear producto
-router.post('/', async (req, res) => {
+router.post('/createProduct', async (req, res) => {
   const producto = new Product(req.body);
   await producto.save();
   res.send(producto);
 });
 
 // Obtener productos
-router.get('/', async (req, res) => {
+router.get('/getProduct', async (req, res) => {
   const productos = await Product.find();
   res.send(productos);
 });
