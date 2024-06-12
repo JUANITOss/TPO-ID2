@@ -64,7 +64,7 @@ client.connect().catch(console.error);
 // Middleware interaccion
 app.use(cors({
   origin: 'http://localhost:3000',
-  methods: ['get', 'post'],
+  methods: ['get', 'post', 'put'],
   allowedHeaders: ['Content-Type'],
   credentials: true,
 }));
