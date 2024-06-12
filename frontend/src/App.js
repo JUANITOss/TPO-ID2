@@ -4,9 +4,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // Desde USER
 import Login from './components/user/Login';
 import Register from './components/user/Register';
-import Home from './components/Home';
+import LandingPage from './components/LandingPage';
 import TestConnection from './components/TestConnection';
 import Main from './components/Main';
+import Cart from './components/Cart';
 
 // TODO
 // import Cart from './components/Cart';
@@ -20,11 +21,12 @@ function App() {
     <Router>
     <div>
       <Routes>
-        <Route path='/' element= {<Home />} />
+        <Route path='/' element= {<LandingPage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path='/test' element={<TestConnection />} />
         <Route path='/main' element={<Main />} />
+        <Route path='/cart' element={<Cart />} />
       </Routes>
     </div>
   </Router>
