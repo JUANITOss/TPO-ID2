@@ -13,7 +13,7 @@ function AddProduct() {
     e.preventDefault();
     try {
       const response = await api.post('/product/addProduct', product);
-      // Manejar la respuesta del servidor
+      // Manejar la respuesta del servidor  
       console.log(response.data);
     } catch (error) {
       console.error(error);
