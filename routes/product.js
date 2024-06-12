@@ -3,8 +3,8 @@ const Product = require('../models/Product');
 const Cart = require('../models/Cart');
 const router = express.Router();
 
-// Crear producto
-router.post('/createProduct', async (req, res) => {
+// Añadir producto
+router.post('/addProduct', async (req, res) => {
   const producto = new Product(req.body);
   await producto.save();
   res.send(producto);
@@ -17,7 +17,7 @@ router.get('/getProduct', async (req, res) => {
 });
 
 // Actualizar producto
-router.put('/:productId', async (req, res) => {
+router.put('/updateProduct/:productId', async (req, res) => {
   const producto = await Product.findOne({ productId: req.params.productId });
 
   if (producto) {
@@ -37,7 +37,7 @@ router.put('/:productId', async (req, res) => {
 });
 
 // Agregar producto a carrito
-router.post('/addProduct', async (req, res) => {
+router.post('/addProductCart', async (req, res) => {
   try {
       const user = req.session.userId;
       const { productoId, nombreProducto, cantidad, precioUnitario } = req.body;
