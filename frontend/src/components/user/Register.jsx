@@ -15,7 +15,7 @@ const Register = () => {
       const response = await api.post('/register', { username, password, dni, direccion });
       if (response.status === 201) {
         setMessage('User registered successfully');
-        window.location="/Main";
+        window.location="/Login";
         
       } else if (response.status === 200) {
         setMessage('User already registered');
