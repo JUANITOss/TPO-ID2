@@ -13,7 +13,7 @@ const app = express();
 const registerRoutes = require('./routes/register');
 const loginRoutes = require('./routes/login');
 const productRoutes = require('./routes/product');
-// const cartRoutes = require('./routes/cart');
+const cartRoutes = require('./routes/cart');
 // const orderRoutes = require('./routes/order');
 // const billRoutes = require('./routes/bill');
 
@@ -103,7 +103,7 @@ app.get('/perfil', verificarAutenticacion, (req, res) => {
 app.use('/register', registerRoutes);
 app.use('/login', loginRoutes);
 app.use('/product', productRoutes);
-// app.use('/cart', cartRoutes);
+app.use('/cart', cartRoutes);
 //app.use('/order', orderRoutes);
 //app.use('/bill', invoiceRoutes);
 

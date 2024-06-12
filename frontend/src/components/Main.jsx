@@ -13,7 +13,10 @@ const Main = () => {
               <Link to="/list-product">Ver Productos</Link>
             </li>
             <li>
-                <Link to="/list-product">Actualizar Productos</Link>  
+                <Link to="/update-product/:productId">Actualizar Productos</Link>  
+            </li>
+            <li>
+                <Link to="/info-cart">Ver Carrito</Link>  
             </li>
           </ul>
         </nav>

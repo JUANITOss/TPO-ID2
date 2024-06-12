@@ -17,11 +17,11 @@ router.get('/getProduct', async (req, res) => {
 });
 
 // Actualizar producto
-router.put('/updateProduct/:productId', async (req, res) => {
-  const producto = await Product.findOne({ productId: req.params.productId });
+router.put('/updateProduct/:_id', async (req, res) => {
+  const producto = await Product.findOne({ _id: req.params._id });
 
   if (producto) {
-    const { nombreProducto, descripcion, fotos, videos, precio, operador } = req.body;
+    const { nombreProducto, descripcion, precio, operador } = req.body;
     const precioAnterior = producto.precio;
 
     producto.nombreProducto = nombreProducto;
@@ -37,28 +37,27 @@ router.put('/updateProduct/:productId', async (req, res) => {
 });
 
 // Agregar producto a carrito
-router.post('/addProductCart', async (req, res) => {
+router.post('/productToCart', async (req, res) => {
   try {
       const user = req.session.userId;
-      const { productoId, nombreProducto, cantidad, precioUnitario } = req.body;
+      const { _id, nombreProducto, cantidad, precio } = req.body;
 
       const carrito = await Cart.findOne({ userId: user });
 
       if (carrito) {
           // Verificar si el producto ya existe en el carrito
-          const productoExistente = carrito.productos.find(producto => producto.productoId === productoId);
+          const productoExistente = carrito.productos.find(producto => producto._id === _id);
 
           if (productoExistente) {
               // Si el producto ya existe, incrementar la cantidad
               productoExistente.cantidad += cantidad;
           } else {
               // Si el producto no existe, agregarlo al array de productos
-              carrito.productos.push({ productoId, nombreProducto, cantidad, precioUnitario });
+              carrito.productos.push({ nombreProducto, cantidad, precio });
           }
 
           // Guardar los cambios en el carrito
           await carrito.save();
-
           res.send({ message: 'Productos agregados al carrito con éxito', carrito });
       } else {
           res.status(404).send({ message: 'Carrito no existente' });

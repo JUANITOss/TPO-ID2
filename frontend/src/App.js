@@ -9,6 +9,7 @@ import Main from './components/Main';
 import AddProduct from './components/product/AddProduct';
 import ListProduct from './components/product/ListProduct';
 import UpdateProduct from './components/product/UpdateProduct';
+import CartInfo from './components/cart/CartInfo';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/add-product" element={<AddProduct />} />
           <Route path="/list-product" element={<ListProduct />} />
           <Route path='/update-product/:productId?' element={<UpdateProduct />}/>
+          <Route path='/info-cart' element={<CartInfo />}/>
         </Routes>
       </div>
     </Router>
