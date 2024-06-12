@@ -64,7 +64,7 @@ client.connect().catch(console.error);
 // Middleware interaccion
 app.use(cors({
   origin: 'http://localhost:3000',
-  methods: ['get', 'post', 'put'],
+  methods: ['get', 'post', 'put', 'delete'],
   allowedHeaders: ['Content-Type'],
   credentials: true,
 }));
@@ -78,6 +78,7 @@ app.use((req, res, next) => {
   req.redisClient = client;
   next();
 });
+
 app.use((req, res, next) => {
   req.db = mongoose.connection;
   next();
