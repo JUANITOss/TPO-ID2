@@ -1,5 +1,6 @@
 // IMPORTS
 const express = require('express');
+const session = require('express-session');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -9,12 +10,24 @@ const redis = require('redis');
 const app = express();
 
 // URLS
+
+
+// const orderRoutes = require('./routes/order');
+// const productRoutes = require('./routes/product');
+// const invoiceRoutes = require('./routes/bill');
+
 const cartRoutes = require('./routes/cart');
-const orderRoutes = require('./routes/order');
-const productRoutes = require('./routes/product');
-const invoiceRoutes = require('./routes/bill');
 const registerRoutes = require('./routes/register');
 const loginRoutes = require('./routes/login');
+
+// Sesiones
+
+app.use(session({
+  secret: "pwdx",
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false},
+}));
 
 // Conectar a MongoDB
 const connectDB = async () => {
@@ -43,16 +56,16 @@ client.on('connect', () => {
 client.connect().catch(console.error);
 
 // Middleware interaccion
-// Configurar CORS
 app.use(cors({
   origin: 'http://localhost:3000',
-  //methods: ['GET', 'POST'],
-  //allowedHeaders: ['Content-Type'],
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type'],
   credentials: true,
 }));
 
 app.use(bodyParser.json());
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 // Middleware de los clientes
 app.use((req, res, next) => {
