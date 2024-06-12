@@ -61,12 +61,26 @@ client.on('connect', () => {
 
 client.connect().catch(console.error);
 
+// Middleware para manejar las solicitudes OPTIONS
+const handleOptions = (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+  res.header('Access-Control-Allow-Credentials', true);
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+};
+
 // Middleware interaccion
 app.use(cors({
-  origin: 'http://localhost:3000',
-  methods: ['get', 'post', 'put', 'delete'],
-  allowedHeaders: ['Content-Type'],
-  credentials: true,
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+    optionsSuccessStatus: 204 // Retorna 204 No Content en las respuestas a los métodos que solicitan el successStatus  
 }));
 
 app.use(bodyParser.json());
@@ -99,10 +113,10 @@ app.get('/perfil', verificarAutenticacion, (req, res) => {
 });
 
  // Rutas
-app.use('/register', registerRoutes);
-app.use('/login', loginRoutes);
-app.use('/product', productRoutes);
-app.use('/cart', cartRoutes);
+app.use('/register', handleOptions, registerRoutes);
+app.use('/login', handleOptions, loginRoutes);
+app.use('/product', handleOptions, productRoutes);
+app.use('/cart', handleOptions, cartRoutes);
 //app.use('/order', orderRoutes);
 //app.use('/bill', invoiceRoutes);
 
