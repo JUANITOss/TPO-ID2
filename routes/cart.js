@@ -42,7 +42,6 @@ router.post('/addProduct', async (req, res) => {
 });
 
 // MODIFICAR CARRITO
-
 router.put('/modificar/:cartId', async (req, res) => {
     try {
       const cartId = req.params.cartId;
@@ -64,7 +63,6 @@ router.put('/modificar/:cartId', async (req, res) => {
 });
 
 // VACIAR CARRITO
-
 router.delete('/vaciar/:cartId', async (req, res) => {
     try {
       const cartId = req.params.cartId;
@@ -80,8 +78,6 @@ router.delete('/vaciar/:cartId', async (req, res) => {
       res.status(500).send({ message: 'Error al vaciar el carrito', error });
     }
   });
-
-
 
 // OBTENER CARRITO DE LA SESION
 router.get('/', async (req, res) => {
