@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './estilosCSS/Main.css'; // Ruta correcta para importar el archivo CSS
+import './estilosCSS/Main.css'; 
 
 const Main = () => {
   return (
