@@ -13,9 +13,9 @@ const app = express();
 
 
 // const orderRoutes = require('./routes/order');
-// const productRoutes = require('./routes/product');
-// const invoiceRoutes = require('./routes/bill');
+// const billRoutes = require('./routes/bill');
 
+const productRoutes = require('./routes/product');
 const cartRoutes = require('./routes/cart');
 const registerRoutes = require('./routes/register');
 const loginRoutes = require('./routes/login');
@@ -66,7 +66,7 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-s
+
 // Middleware de los clientes
 app.use((req, res, next) => {
   req.redisClient = client;
@@ -80,11 +80,9 @@ app.use((req, res, next) => {
  // Rutas
 app.use('/register', registerRoutes);
 app.use('/login', loginRoutes);
- 
-
 app.use('/product', productRoutes);
-
 app.use('/cart', cartRoutes);
+
 //app.use('/order', orderRoutes);
 //app.use('/bill', invoiceRoutes);
 
