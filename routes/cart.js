@@ -3,11 +3,6 @@ const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const router = express.Router();
 
-// FALTA
-// MODIFICAR CARRITO
-// VACIAR CARRITO
-// CONVERTIR CARRITO A PEDIDO 
-
 // MODIFICAR CARRITO
 router.put('/modifiyCart', async (req, res) => {
   try {

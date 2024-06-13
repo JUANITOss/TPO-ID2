@@ -19,6 +19,9 @@ const Main = () => {
           <li>
             <Link to="/info-cart" className="nav-link">Ver Carrito</Link>
           </li>
+          <li>
+            <Link to="/list-order" className="nav-link">Lista de Ordenes :D</Link>
+          </li>
         </ul>
       </nav>
     </div>
