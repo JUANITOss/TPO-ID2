@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
 
 const BillList = () => {
   const [bills, setBills] = useState([]);
@@ -10,7 +10,7 @@ const BillList = () => {
 
   const fetchBills = async () => {
     try {
-      const response = await axios.get('/api/bills/getBills');
+      const response = await api.get('/bill/getBills');
       setBills(response.data);
     } catch (error) {
       console.error('Error fetching bills:', error);
@@ -19,8 +19,7 @@ const BillList = () => {
 
   const handleDeleteBill = async (id) => {
     try {
-      await axios.delete(`/api/bills/deleteBillId/${id}`);
-      // Actualizar la lista de facturas después de eliminar
+      await api.delete(`/bill/deleteBillId/${id}`);
       fetchBills();
     } catch (error) {
       console.error('Error deleting bill:', error);

@@ -15,7 +15,7 @@ const loginRoutes = require('./routes/login');
 const productRoutes = require('./routes/product');
 const cartRoutes = require('./routes/cart');
 const orderRoutes = require('./routes/order');
-// const billRoutes = require('./routes/bill');
+const billRoutes = require('./routes/bill');
 
 
 // Sesiones
@@ -117,8 +117,8 @@ app.use('/register', handleOptions, registerRoutes);
 app.use('/login', loginRoutes);
 app.use('/product', handleOptions, productRoutes);
 app.use('/cart', handleOptions, cartRoutes);
-app.use('/order', orderRoutes);
-//app.use('/bill', invoiceRoutes);
+app.use('/order', handleOptions, orderRoutes);
+app.use('/bill', handleOptions, invoiceRoutes);
 
 // Ruta de prueba
 app.get('/api/test', (req, res) => {

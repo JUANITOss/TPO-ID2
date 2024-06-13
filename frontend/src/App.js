@@ -30,8 +30,8 @@ function App() {
           <Route path='/info-cart' element={<CartInfo />}/>
           <Route path='/list-order' element={<OrderList/>}/>
           <Route path="/list-bills" exact component={<BillList />} />
-          <Route path="/bills/new" component={<BillForm />} />
-          <Route path="/bills/update/:id" render={(props) => <UpdateBillForm billId={props.match.params.id} />} />
+          <Route path="/new-bill" component={<BillForm />} />
+          <Route path="/update-bill/:id?" render={(props) => <UpdateBillForm billId={props.match.params.id} />} />
         </Routes>
       </div>
     </Router>
