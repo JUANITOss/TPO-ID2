@@ -8,6 +8,8 @@ const BillForm = () => {
   const [total, setTotal] = useState(0);
   const [fechaFactura, setFechaFactura] = useState('');
   const [pagos, setPagos] = useState([]);
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,21 +24,27 @@ const BillForm = () => {
 
     try {
       const response = await api.post('/bill/createBill', newBill);
-      console.log('New bill created:', response.data);
+      setMessage('Nueva factura creada exitosamente.');
+      setError('');
       setOrderId('');
       setUserId('');
       setProductos([]);
       setTotal(0);
       setFechaFactura('');
       setPagos([]);
+      console.log('New bill created:', response.data);
     } catch (error) {
       console.error('Error creating bill:', error);
+      setMessage('');
+      setError('Error al crear la factura.');
     }
   };
 
   return (
     <div>
       <h2>Crear Nueva Factura</h2>
+      {message && <p style={{ color: 'green' }}>{message}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <label>
           Order ID:

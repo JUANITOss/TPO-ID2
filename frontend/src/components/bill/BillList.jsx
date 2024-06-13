@@ -29,17 +29,21 @@ const BillList = () => {
   return (
     <div>
       <h2>Listado de Facturas</h2>
-      <ul>
-        {bills.map((bill) => (
-          <li key={bill._id}>
-            <p>OrderId: {bill.orderId}</p>
-            <p>Usuario ID: {bill.userId}</p>
-            <p>Total: {bill.total}</p>
-            <button onClick={() => handleDeleteBill(bill._id)}>Eliminar</button>
-            <hr />
-          </li>
-        ))}
-      </ul>
+      {bills.length === 0 ? (
+        <p>No hay facturas disponibles.</p>
+      ) : (
+        <ul>
+          {bills.map((bill) => (
+            <li key={bill._id}>
+              <p>OrderId: {bill.orderId}</p>
+              <p>Usuario ID: {bill.userId}</p>
+              <p>Total: {bill.total}</p>
+              <button onClick={() => handleDeleteBill(bill._id)}>Eliminar</button>
+              <hr />
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

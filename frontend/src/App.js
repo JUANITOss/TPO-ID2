@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-//Habria que ver la forma de separar rutas admin de user, para implementacion futura
 import Login from './components/user/Login';
 import Register from './components/user/Register';
 import LandingPage from './components/LandingPage';
@@ -29,12 +28,13 @@ function App() {
           <Route path='/update-product/:productId?' element={<UpdateProduct />}/>
           <Route path='/info-cart' element={<CartInfo />}/>
           <Route path='/list-order' element={<OrderList/>}/>
-          <Route path="/list-bills" exact component={<BillList />} />
-          <Route path="/new-bill" component={<BillForm />} />
-          <Route path="/update-bill/:id?" render={(props) => <UpdateBillForm billId={props.match.params.id} />} />
+          <Route path="/list-bills" element={<BillList />} />
+          <Route path="/create-bill" element={<BillForm />} />
+          <Route path="/update-bill/:id" element={<UpdateBillForm />} />
         </Routes>
       </div>
     </Router>
   );
 }
+
 export default App;

@@ -11,21 +11,28 @@ const UpdateBillForm = ({ billId }) => {
   const [pagos, setPagos] = useState([]);
 
   useEffect(() => {
-    fetchBill();
+    if (billId) {
+      fetchBill();
+    }
   }, [billId]);
 
   const fetchBill = async () => {
     try {
-      const response = await api.get(`bill/getBillsId`);
-      setBill(response.data);
-      setOrderId(response.data.orderId);
-      setUserId(response.data.userId);
-      setProductos(response.data.productos);
-      setTotal(response.data.total);
-      setFechaFactura(response.data.fechaFactura);
-      setPagos(response.data.pagos);
+      const response = await api.get(`/bill/getBillById/${billId}`);
+      if (response.data) {
+        setBill(response.data);
+        setOrderId(response.data.orderId);
+        setUserId(response.data.userId);
+        setProductos(response.data.productos);
+        setTotal(response.data.total);
+        setFechaFactura(response.data.fechaFactura);
+        setPagos(response.data.pagos);
+      } else {
+        setBill(null);
+      }
     } catch (error) {
       console.error('Error fetching bill:', error);
+      setBill(null);
     }
   };
 
@@ -41,15 +48,19 @@ const UpdateBillForm = ({ billId }) => {
     };
 
     try {
-      const response = await api.put(`bill/updateBillId`, updatedBill);
+      const response = await api.put(`/bill/updateBillById/${billId}`, updatedBill);
       console.log('Bill updated:', response.data);
     } catch (error) {
       console.error('Error updating bill:', error);
     }
   };
 
+  if (bill === null) {
+    return <div>No se encontró la factura.</div>;
+  }
+
   if (!bill) {
-    return <div>Loading...</div>;
+    return <div>Cargando...</div>;
   }
 
   return (
