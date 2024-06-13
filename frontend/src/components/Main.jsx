@@ -4,7 +4,8 @@ import './estilosCSS/Main.css';
 
 const Main = () => {
   return (
-    <div className="main-container">
+    <div className='h-screen w-full flex items-center bg-neutral-800'>
+    <div className="mx-auto w-[400px] space-y-6 px-8 py-4 bg-gradient-to-r from-sky-500 to-indigo-500 shadow-xl rounded-md">
       <nav>
         <ul className="nav-list">
           <li>
@@ -19,8 +20,12 @@ const Main = () => {
           <li>
             <Link to="/info-cart" className="nav-link">Ver Carrito</Link>
           </li>
+          <li>
+            <Link to="/list-order" className="nav-link">Ver Order</Link>
+          </li>
         </ul>
       </nav>
+    </div>
     </div>
   );
 };

@@ -6,7 +6,7 @@ function AddProduct() {
   const [product, setProduct] = useState({
     nombreProducto: '',
     descripcion: '',
-    precio: 0,
+    precio: '',
     operador: ''
   });
 
