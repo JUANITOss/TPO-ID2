@@ -15,9 +15,6 @@ router.get('/getOrders', async (req, res) => {
       console.error('Error al obtener las órdenes:', error);
       res.status(500).send({ message: 'Error al obtener las órdenes', error });
     }
-<<<<<<< HEAD
-});
-=======
   });
   
   // Ruta para crear un nuevo pedido
@@ -36,6 +33,5 @@ router.get('/getOrders', async (req, res) => {
       res.status(400).send({ message: error.message });
     }
   });
->>>>>>> d04fcee (cosas mal)
   
 module.exports = router;
