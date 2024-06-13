@@ -61,7 +61,7 @@ router.post('/productToCart', async (req, res) => {
 
       if (carrito) {
           // Verificar si el producto ya existe en el carrito
-          const productoExistente = carrito.productos.find(producto => producto._id === _id);
+          const productoExistente = carrito.productos.find(producto => producto.nombreProducto === nombreProducto);
 
           if (productoExistente) {
               // Si el producto ya existe, incrementar la cantidad
