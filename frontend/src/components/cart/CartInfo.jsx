@@ -22,11 +22,17 @@ const CartInfo = () => {
     fetchCart();
   }, []);
 
-  const handleConvertToOrder = () => {
-    // Placeholder function for future implementation
-    console.log('Convertir el carrito en una orden');
-    alert('Esta funcionalidad estará disponible próximamente');
+  const handleConvertToOrder = async () => {
+    try {
+      const response = await api.post('/cart/cartToOrder');
+      alert('Carrito convertido a orden con éxito');
+      await api.get('/order/allOrders');
+
+    } catch (error) {
+      console.error('Error al convertir el carrito en orden:', error);
+    }
   };
+  
 
   if (loading) return <div>Cargando...</div>;
   if (error) return <div>Error al cargar el carrito</div>;

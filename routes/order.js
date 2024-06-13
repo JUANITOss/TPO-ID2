@@ -13,12 +13,12 @@ const router = express.Router();
 const Order = require('../models/Order');
 
 // Ruta para obtener todos los pedidos
-router.get('/', async (req, res) => {
+router.get('/allOrders', async (req, res) => {
     try {
       const orders = await Order.find();
-      res.json(orders);
+      res.send(orders);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).send({ message: error.message });
     }
   });
   
@@ -27,12 +27,12 @@ router.get('/', async (req, res) => {
     try {
       const order = await Order.findById(req.params.orderId);
       if (order) {
-        res.json(order);
+        res.send(order);
       } else {
-        res.status(404).json({ message: 'Pedido no encontrado' });
+        res.status(404).send({ message: 'Pedido no encontrado' });
       }
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).send({ message: error.message });
     }
   });
   
