@@ -33,14 +33,6 @@ const ListProduct = () => {
     }
   };
 
-  const handleQuantityChange = (productId, newQuantity) => {
-    setProducts(prevProducts =>
-      prevProducts.map(product =>
-        product._id === productId ? { ...product, quantity: newQuantity } : product
-      )
-    );
-  };
-
   return (
     <div class="flex flex-col gap-6 p-6 md:p-8 bg-neutral-800">
   <div class="flex items-center justify-between">

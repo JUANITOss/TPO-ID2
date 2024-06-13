@@ -45,7 +45,7 @@ const UpdateProduct = () => {
     try {
       const response = await api.put(`/product/updateProduct/${selectedProduct._id}`, productData);
       console.log('Producto actualizado:', response.data);
-      navigate('/'); // Redirigir a la lista de productos después de actualizar
+      navigate('/main'); // Redirigir a la lista de productos después de actualizar
     } catch (error) {
       console.error('Error al actualizar el producto:', error);
     }
