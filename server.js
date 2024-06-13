@@ -15,7 +15,7 @@ const loginRoutes = require('./routes/login');
 const productRoutes = require('./routes/product');
 const cartRoutes = require('./routes/cart');
 const orderRoutes = require('./routes/order');
-//const billRoutes = require('./routes/bill');
+const billRoutes = require('./routes/bill');
 
 
 // Sesiones
