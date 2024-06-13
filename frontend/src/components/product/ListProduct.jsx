@@ -45,13 +45,21 @@ const ListProduct = () => {
     <div class="flex flex-col gap-6 p-6 md:p-8 bg-neutral-800">
   <div class="flex items-center justify-between">
     <h1 class="text-white text-2xl font-bold">Products</h1>
+     <div className="flex items-center justify-self-end space-x-4">
+    <Link to="/info-cart">
+      <button 
+        className="nav-link inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white">
+            View Cart
+      </button>
+    </Link>
     <Link to="/">
-        <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white">
+        <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white">
             Logout
         </button>
     </Link>
+   </div> 
   </div>
-  <div class="overflow-auto">
+  <div class="overflow-auto h-screen bg-neutral-800">
     <div class="relative w-full overflow-auto">
       <table class="w-full caption-bottom text-sm">
         <thead class="[&amp;_tr]:border-b">
