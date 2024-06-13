@@ -4,7 +4,7 @@ const OrderSchema = new mongoose.Schema({
   userId: String,
   nombreResponsable: String,
   apellidoResponsable: String,
-  recargo: 21, // IVA
+  recargo: Number, // IVA -- SET TO 21
   productos: [
     {
       nombreProducto: String,

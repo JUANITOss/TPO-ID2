@@ -113,8 +113,8 @@ app.get('/perfil', verificarAutenticacion, (req, res) => {
 });
 
  // Rutas
-app.use('/register', handleOptions, registerRoutes);
-app.use('/login', handleOptions, loginRoutes);
+app.use('/register', registerRoutes);
+app.use('/login', loginRoutes);
 app.use('/product', handleOptions, productRoutes);
 app.use('/cart', handleOptions, cartRoutes);
 //app.use('/order', orderRoutes);
