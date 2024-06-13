@@ -16,6 +16,7 @@ function AddProduct() {
     try {
       const response = await api.post('/product/addProduct', product);
       console.log(response.data);
+      alert('Producto creado con exito');
     } catch (error) {
       console.error(error);
     }
