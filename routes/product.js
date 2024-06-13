@@ -5,7 +5,7 @@ const router = express.Router();
 
 // Añadir producto
 router.post('/addProduct', async (req, res) => {
-  const { nombreProducto } = req.body;
+  const { nombreProducto, descripcion, precio, operador } = req.body;
 
   try {
     // Verificar si ya existe un producto con el mismo nombre
@@ -16,7 +16,7 @@ router.post('/addProduct', async (req, res) => {
     }
 
     // Si no existe, creamos un nuevo producto y lo guardamos
-    const nuevoProducto = new Product({ nombreProducto });
+    const nuevoProducto = new Product({ nombreProducto, descripcion, precio, operador });
     await nuevoProducto.save();
 
     res.status(201).json(nuevoProducto);
