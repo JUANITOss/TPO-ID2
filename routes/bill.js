@@ -1,58 +1,94 @@
-// FALTA
-
-// factura tiene:
-    // username que la creo
-    // nombre y apellido del responsable del pedido
-    // Medio de pago (Mercado Pago, Tarjeta)
-    // Operador humano interviniente (puede o no haber)
-    // fecha
-    // hora
-    // monto TOTAL (sumatoria de valores de productos presentes en order, sus descuentos e impuestos ya aplicados desde order)
-
-// funcion CREAR FACTURA => Obtiene datos de order y da los datos nuevos necesarios 
-//(medioPago, oerador, fecha y hora)
-
-// funcion VER FACTURAS => Se deben visualizar todas las facturas existentes en la DB 
-//O verse las del usuario que las solicitó
-
+const Bill = require('../models/Bill'); // Asegúrate de tener la ruta correcta al modelo Bill
 const express = require('express');
-const Bill = require('../models/Bill');
 const router = express.Router();
 
-
-// Crear factura
-router.post('/', async (req, res) => {
+// Ruta para obtener todas las facturas (GET /bills)
+router.get('/getBills', async (req, res) => {
   try {
-
-    const { orderId, userId, productos, total, pagos } = req.body;
-
-    const factura = new Bill({
-      BillId: new mongoose.Types.ObjectId().toString(),
-      orderId: orderId,
-      userId: userId,
-      productos: productos,
-      total: total,
-      fechaFactura: new Date().toISOString(), // Fecha actual
-      pagos: pagos || []
-    });
-
-    // Guardar la factura en la base de datos
-    await factura.save();
-
-    res.send(factura);
-  } 
-    catch (error) {
-    res.status(500).send({ error: 'error del server' });
+      const bills = await Bill.find();
+      res.json(bills);
+  } catch (err) {
+      res.status(500).json({ message: err.message });
   }
 });
 
-// Ver facturas
-router.get('/', async (req, res) => {
-    const factura = await Bill.find();
-    res.send(factura);
+// Ruta para obtener una factura por ID (GET /bills/:id)
+router.get('/getBillsId/:id', getBill, (req, res) => {
+  res.json(res.bill);
 });
 
+// Ruta para crear una nueva factura (POST /bills)
+router.post('/', async (req, res) => {
+  const bill = new Bill({
+      orderId: req.body.orderId,
+      userId: req.body.userId,
+      productos: req.body.productos,
+      total: req.body.total,
+      fechaFactura: req.body.fechaFactura,
+      pagos: req.body.pagos
+  });
 
+  try {
+      const newBill = await bill.save();
+      res.status(201).json(newBill);
+  } catch (err) {
+      res.status(400).json({ message: err.message });
+  }
+});
 
+// Ruta para actualizar una factura (PUT /bills/:id)
+router.put('/updateBillId/:id', getBill, async (req, res) => {
+  if (req.body.orderId != null) {
+      res.bill.orderId = req.body.orderId;
+  }
+  if (req.body.userId != null) {
+      res.bill.userId = req.body.userId;
+  }
+  if (req.body.productos != null) {
+      res.bill.productos = req.body.productos;
+  }
+  if (req.body.total != null) {
+      res.bill.total = req.body.total;
+  }
+  if (req.body.fechaFactura != null) {
+      res.bill.fechaFactura = req.body.fechaFactura;
+  }
+  if (req.body.pagos != null) {
+      res.bill.pagos = req.body.pagos;
+  }
 
+  try {
+      const updatedBill = await res.bill.save();
+      res.json(updatedBill);
+  } catch (err) {
+      res.status(400).json({ message: err.message });
+  }
+});
 
+// Ruta para eliminar una factura (DELETE /bills/:id)
+router.delete('/deleteBillId/:id', getBill, async (req, res) => {
+  try {
+      await res.bill.remove();
+      res.json({ message: 'Deleted Bill' });
+  } catch (err) {
+      res.status(500).json({ message: err.message });
+  }
+});
+
+// Middleware para obtener una factura por ID
+async function getBill(req, res, next) {
+  let bill;
+  try {
+      bill = await Bill.findById(req.params.id);
+      if (bill == null) {
+          return res.status(404).json({ message: 'Cannot find Bill' });
+      }
+  } catch (err) {
+      return res.status(500).json({ message: err.message });
+  }
+
+  res.bill = bill;
+  next();
+}
+
+module.exports = router;

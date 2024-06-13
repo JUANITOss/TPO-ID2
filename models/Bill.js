@@ -1,23 +1,23 @@
 const mongoose = require('mongoose');
 
 const BillSchema = new mongoose.Schema({
-  orderId: String,
-  userId: String,
-  productos: [
+  orderId: String, //ID que se genera de la forma userId+date
+  userId: String, // obtenido por express session
+  productos: [ // Listado obtenido de order
     {
       productoId: String,
       nombreProducto: String,
-      precioFinal: Number,
+      precioFinal: Number, // Se hace (desde order), la sumatoria de total - descuento + impuesto + recargo (21% de iva)
     }
   ],
-  total: Number,
-  fechaFactura: String,
-  pagos: [
+  total: Number, // Sumatoria de todos los preciosFInales de todos los productos
+  fechaFactura: String, //Date de creacion
+  pagos: [ // Se manejan los pagos que hace el usuario (crear url en routes/bill para ir a pagos)
     {
-      pagoId: String,
-      fechaPago: String,
-      monto: Number,
-      metodoPago: String
+      pagoId: String, // orderId+date
+      fechaPago: String, //date de aceptar pago
+      monto: Number, // Pago que debe realizar el usuario (total)
+      metodoPago: String // Puede seleccionar entre mercadoPago, tarjeta, transferencia o pago en vivo
     }
   ]
 });
