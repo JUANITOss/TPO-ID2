@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
 
 const UpdateBillForm = ({ billId }) => {
   const [bill, setBill] = useState(null);
@@ -16,7 +16,7 @@ const UpdateBillForm = ({ billId }) => {
 
   const fetchBill = async () => {
     try {
-      const response = await axios.get(`/api/bills/getBillsId/${billId}`);
+      const response = await api.get(`bill/getBillsId`);
       setBill(response.data);
       setOrderId(response.data.orderId);
       setUserId(response.data.userId);
@@ -41,7 +41,7 @@ const UpdateBillForm = ({ billId }) => {
     };
 
     try {
-      const response = await axios.put(`/api/bills/updateBillId/${billId}`, updatedBill);
+      const response = await api.put(`bill/updateBillId`, updatedBill);
       console.log('Bill updated:', response.data);
     } catch (error) {
       console.error('Error updating bill:', error);

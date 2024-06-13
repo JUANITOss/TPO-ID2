@@ -70,52 +70,48 @@ router.get('/getOrders', async (req, res) => {
   });
 
   // CONVERTIR CARRITO A PEDIDO
-router.post('/cartToOrder', async (req, res) => {
+  router.post('/cartToOrder', async (req, res) => {
     try {
-      const user = req.session.userId;
-      const carrito = await Cart.findOne({ userId: user });
-  
-      if (!carrito) {
-        return res.status(404).send({ message: 'Carrito no encontrado' });
-      }
-  
-      if (carrito.productos.length === 0) {
-        return res.status(400).send({ message: 'El carrito está vacío' });
-      }
-  
-      // Calcula los totales y ajusta los campos necesarios
-      const productosPedido = carrito.productos.map(producto => ({
-        nombreProducto: producto.nombreProducto,
-        total: producto.cantidad * producto.precioUnitario,
-        descuento: 0, // Puedes ajustar esto según tu lógica de descuentos
-        impuesto: producto.cantidad * producto.precioUnitario * 0.21, // Ejemplo de impuesto (IVA)
-      }));
+      const userId = req.session.userId; // Obtener el ID de usuario desde la sesión (si lo usas)
       
-      // Crea un nuevo pedido usando el esquema OrderSchema
-      const nuevoPedido = new Order({
-        userId: user,
-        nombreResponsable: req.body.nombreResponsable,
-        apellidoResponsable: req.body.apellidoResponsable,
-        recargo: 21, // Seteado a 21 como IVA por defecto
-        productos: productosPedido,
-        fechaPedido: new Date().toISOString(),
-        estado: 'pendiente', // Estado inicial del pedido
+      // Buscar el carrito asociado al usuario
+      const cart = await Cart.findOne({ userId });
+  
+      // Verificar si el carrito existe y tiene productos
+      if (!cart || cart.products.length === 0) {
+        return res.status(400).json({ message: 'El carrito está vacío o no existe' });
+      }
+  
+      // Crear un array de productos para la orden de compra
+      const orderProducts = cart.products.map(product => ({
+        name: product.name,
+        quantity: product.quantity,
+        price: product.price,
+      }));
+  
+      // Crear un nuevo objeto de orden de compra
+      const newOrder = new Order({
+        userId: userId, // Asignar el usuario al pedido (si es necesario)
+        products: orderProducts,
+        orderDate: new Date(),
+        status: 'pending', // Estado inicial del pedido
       });
   
-      // Guarda el nuevo pedido en la base de datos
-      const pedidoGuardado = await nuevoPedido.save();
+      // Guardar la orden de compra en la base de datos
+      const savedOrder = await newOrder.save();
   
-      // Vaciar el carrito después de convertirlo a pedido
-      carrito.productos = [];
-      await carrito.save();
+      // Limpiar el carrito después de convertirlo en orden de compra
+      cart.products = [];
+      await cart.save();
   
-      res.status(201).send({ message: 'Carrito convertido a pedido con éxito', pedido: pedidoGuardado });
+      // Enviar una respuesta exitosa al cliente
+      res.status(201).json({ message: 'Carrito convertido en orden de compra con éxito', order: savedOrder });
     } catch (error) {
-      console.error('Error al convertir el carrito a pedido:', error);
-      res.status(500).send({ message: 'Error al convertir el carrito a pedido', error });
+      // Manejar errores y enviar una respuesta de error al cliente
+      console.error('Error al convertir el carrito en orden de compra:', error);
+      res.status(500).json({ message: 'Error interno del servidor al convertir el carrito en orden de compra', error });
     }
   });
-
-
-
+  
+  
 module.exports = router;

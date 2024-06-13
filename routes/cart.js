@@ -4,6 +4,11 @@ const Product = require('../models/Product');
 const router = express.Router();
 const Order = require('../models/Order');
 
+// FALTA
+// MODIFICAR CARRITO
+// VACIAR CARRITO
+// CONVERTIR CARRITO A PEDIDO
+
 // MODIFICAR CARRITO
 router.put('/modifiyCart', async (req, res) => {
   try {
@@ -69,43 +74,37 @@ router.get('/getCart', async (req, res) => {
 });
 
 //CONVERTIR CARRITO A PEDIDO
-router.post('/cartToOrder', async (req, res) => {
+router.post('/api/cartToOrder', async (req, res) => {
   try {
-    const user = req.session.userId;
-    const carrito = await Cart.findOne({ userId: user });
-
-    if (!carrito) {
-      return res.status(404).send({ message: 'Carrito no encontrado' });
+    const cart = await Cart.findOne({ estado: 'active' }); // Obtener el carrito activo
+    if (!cart) {
+      return res.status(404).json({ error: 'Carrito no encontrado' });
     }
 
-    if (carrito.productos.length === 0) {
-      return res.status(400).send({ message: 'El carrito está vacío' });
-    }
-
-    const productosPedido = carrito.productos.map(producto => ({
+    const productos = cart.productos.map(producto => ({
       nombreProducto: producto.nombreProducto,
       total: producto.cantidad * producto.precioUnitario,
-      descuento: 0, // Puedes ajustar esto según tu lógica de descuentos
-      impuesto: producto.cantidad * producto.precioUnitario * 0.21, // Ejemplo de impuesto (IVA)
+      descuento: 0, // Setteado a mano
+      impuesto: producto.cantidad * producto.precioUnitario * 0.21 // Setteado a mano, 21% de IVA
     }));
-    
-    const nuevoPedido = new Order({
-      userId: user,
-      productos: carrito.productos,
-      fecha: new Date(),
-      estado: 'pendiente'
+
+    const order = new Order({
+      userId: cart.userId,
+      nombreResponsable: req.body.nombreResponsable, // Input del usuario
+      apellidoResponsable: req.body.apellidoResponsable, // Input del usuario
+      recargo: 21, // IVA
+      productos: productos,
+      fechaPedido: new Date().toISOString(),
+      estado: 'en proceso'
     });
 
-    await nuevoPedido.save();
+    await order.save();
+    await Cart.deleteOne({ _id: cart._id }); // Elimina el carrito si ya no es necesario
 
-    // Vaciar el carrito después de convertirlo a pedido
-    carrito.productos = [];
-    await carrito.save();
-
-    res.send({ message: 'Carrito convertido a pedido con éxito', pedido: nuevoPedido });
+    res.json({ order });
   } catch (error) {
-    console.error('Error al convertir el carrito a pedido:', error);
-    res.status(500).send({ message: 'Error al convertir el carrito a pedido', error });
+    console.error('Error al convertir el carrito en orden:', error);
+    res.status(500).json({ error: 'Error al convertir el carrito en orden' });
   }
 });
 
