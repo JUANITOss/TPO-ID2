@@ -30,7 +30,7 @@ function App() {
           <Route path='/list-order' element={<OrderList/>}/>
           <Route path="/list-bills" element={<BillList />} />
           <Route path="/create-bill" element={<BillForm />} />
-          <Route path="/update-bill/:id" element={<UpdateBillForm />} />
+          <Route path="/update-bill" element={<UpdateBillForm />} />
         </Routes>
       </div>
     </Router>
