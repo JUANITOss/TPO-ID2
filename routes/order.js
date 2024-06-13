@@ -15,6 +15,27 @@ router.get('/getOrders', async (req, res) => {
       console.error('Error al obtener las órdenes:', error);
       res.status(500).send({ message: 'Error al obtener las órdenes', error });
     }
+<<<<<<< HEAD
 });
+=======
+  });
+  
+  // Ruta para crear un nuevo pedido
+  router.post('/', async (req, res) => {
+    const order = new Order({
+      userId: req.body.userId,
+      productos: req.body.productos,
+      fechaPedido: req.body.fechaPedido,
+      estado: req.body.estado
+    });
+  
+    try {
+      const newOrder = await order.save();
+      res.status(201).send(newOrder);
+    } catch (error) {
+      res.status(400).send({ message: error.message });
+    }
+  });
+>>>>>>> d04fcee (cosas mal)
   
 module.exports = router;

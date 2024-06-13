@@ -69,51 +69,66 @@ router.delete('/vaciarCart', async (req, res) => {
 
 // OBTENER CARRITO DE LA SESION
 router.get('/getCart', async (req, res) => {
-    try {
-        const user = req.session.userId; 
-        const cart = await Cart.findOne({ userId: user });
-        if (!cart) {
-            return res.status(404).send({ message: 'No se encontró el carrito para este usuario' });
-        }
-        res.send(cart);
-      } catch (error) {
-        res.status(500).send({ message: 'Error al obtener el carrito del usuario', error });
+  try {
+    const userId = req.session.userId; 
+    if (!userId) {
+      return res.status(400).send({ message: 'No se proporcionó el ID de usuario' });
     }
+
+    const cart = await Cart.findOne();
+    if (!cart) {
+      return res.status(404).send({ message: 'No se encontró el carrito para este usuario' });
+    }
+    
+    console.log('Cart found:', cart);
+
+    res.send(cart);
+
+  } catch (error) {
+    console.error('Error al obtener el carrito del usuario:', error);
+    res.status(500).send({ message: 'Error al obtener el carrito del usuario', error });
+  }
 });
 
 //CONVERTIR CARRITO A PEDIDO
-router.post('/api/cartToOrder', async (req, res) => {
+router.post('/cartToOrder', async (req, res) => {
+
+  const { cartId } = req.body.cartId;
+
   try {
-    const cart = await Cart.findOne({ estado: 'active' }); // Obtener el carrito activo
+    // Obtener el carrito por su ID
+    const cart = await Cart.findById(cartId);
     if (!cart) {
       return res.status(404).json({ error: 'Carrito no encontrado' });
     }
-
-    const productos = cart.productos.map(producto => ({
-      nombreProducto: producto.nombreProducto,
-      total: producto.cantidad * producto.precioUnitario,
-      descuento: 0, // Setteado a mano
-      impuesto: producto.cantidad * producto.precioUnitario * 0.21 // Setteado a mano, 21% de IVA
-    }));
-
+    
+    // Crear la orden basada en el carrito
     const order = new Order({
-      userId: cart.userId,
-      nombreResponsable: req.body.nombreResponsable, // Input del usuario
-      apellidoResponsable: req.body.apellidoResponsable, // Input del usuario
-      recargo: 21, // IVA
-      productos: productos,
+      nombreResponsable: req.body.nombreResponsable, // Ajusta según tus necesidades
+      apellidoResponsable: req.body.apellidoResponsable, // Ajusta según tus necesidades
+      recargo: 21, // IVA del 21% (ajusta según tus necesidades)
+      productos: cart.productos.map(producto => ({
+        nombreProducto: producto.nombreProducto,
+        total: producto.cantidad * producto.precio,
+        descuento: 0, // Puedes ajustar esto según sea necesario
+        impuesto: 21 // Puedes ajustar esto según sea necesario
+      })),
       fechaPedido: new Date().toISOString(),
-      estado: 'en proceso'
+      estado: 'en proceso' // Estado inicial de la orden
     });
 
+    // Guardar la orden en la base de datos
     await order.save();
-    await Cart.deleteOne({ _id: cart._id }); // Elimina el carrito si ya no es necesario
 
-    res.json({ order });
+    // Actualizar el estado del carrito a "procesado"
+    cart.estado = 'procesado';
+    await cart.save();
+
+    // Devolver la orden creada como respuesta
+    res.status(201).json({ order });
   } catch (error) {
     console.error('Error al convertir el carrito en orden:', error);
     res.status(500).json({ error: 'Error al convertir el carrito en orden' });
   }
 });
-
 module.exports = router; 
