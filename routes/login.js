@@ -3,6 +3,21 @@ const bcrypt = require('bcryptjs');
 const Cart = require('../models/Cart');
 const router = express.Router();
 
+// Función para calcular el tiempo activo en minutos
+function calcularTiempoActivo(entrada, salida) {
+  const inicio = new Date(entrada);
+  const fin = new Date(salida);
+
+  // Calcular la diferencia en milisegundos
+  const diffMs = fin - inicio;
+
+  // Convertir la diferencia de milisegundos a minutos
+  const diffMin = Math.round(diffMs / 60000); // 60000 milisegundos = 1 minuto
+
+  return diffMin;
+};
+
+
 router.post('/', async (req, res) => {
   const { username, password } = req.body;
 
@@ -58,7 +73,6 @@ router.post('/', async (req, res) => {
     return res.status(500).json({ error: 'Error logging in' });
   }
 });
-
 router.post('/logout', async (req, res) => {
   try {
     const username = req.session.userId;
@@ -80,6 +94,25 @@ router.post('/logout', async (req, res) => {
     const logoutTime = new Date().toISOString();
     user.logoutTime = logoutTime;
 
+    // Calcular el tiempo activo en minutos
+    const tiempoActivoMinutos = calcularTiempoActivo(user.loginTime, user.logoutTime);
+
+    // Espacio encima del console.log
+    console.log('\n');
+
+    // Clasificación del usuario según el tiempo activo
+    let categoriaUsuario;
+    if (tiempoActivoMinutos > 240) {
+      categoriaUsuario = 'TOP';
+    } else if (tiempoActivoMinutos > 120) {
+      categoriaUsuario = 'MEDIUM';
+    } else {
+      categoriaUsuario = 'LOW';
+    }
+
+    // Mostrar el tiempo activo y la categoría en la consola del servidor
+    console.log(`Tiempo activo de sesión para ${username}: ${tiempoActivoMinutos} minutos. Categoría: ${categoriaUsuario}`);
+    
     // Actualizar el usuario en Redis con la fecha de cierre de sesión
     await req.redisClient.HSET('users', username, JSON.stringify(user));
 
