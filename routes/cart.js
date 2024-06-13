@@ -90,44 +90,42 @@ router.get('/getCart', async (req, res) => {
   }
 });
 
-//CONVERTIR CARRITO A PEDIDO
 router.post('/cartToOrder', async (req, res) => {
 
-  const { cartId } = req.body.cartId;
+  const { cart, current } = req.body;
 
   try {
-    // Obtener el carrito por su ID
-    const cart = await Cart.findById(cartId);
-    if (!cart) {
-      return res.status(404).json({ error: 'Carrito no encontrado' });
-    }
-    
-    // Crear la orden basada en el carrito
-    const order = new Order({
-      nombreResponsable: req.body.nombreResponsable, // Ajusta según tus necesidades
-      apellidoResponsable: req.body.apellidoResponsable, // Ajusta según tus necesidades
-      recargo: 21, // IVA del 21% (ajusta según tus necesidades)
-      productos: cart.productos.map(producto => ({
+    // Calcular el total del pedido y construir la estructura de productos
+    const productos = cart.productos.map(producto => {
+      const total = producto.cantidad * producto.precioUnitario;
+      const impuesto = total * 0.21; // Calculando el impuesto (IVA)
+
+      return {
         nombreProducto: producto.nombreProducto,
-        total: producto.cantidad * producto.precio,
-        descuento: 0, // Puedes ajustar esto según sea necesario
-        impuesto: 21 // Puedes ajustar esto según sea necesario
-      })),
-      fechaPedido: new Date().toISOString(),
-      estado: 'en proceso' // Estado inicial de la orden
+        total: total,
+        descuento: 0,
+        impuesto: impuesto
+      };
+    });
+
+    // Crear la nueva orden
+    const nuevaOrden = new Order({
+      userId: cart.userId,
+      nombreResponsable: current.nombreResponsable,
+      apellidoResponsable: current.apellidoResponsable,
+      dniResponsable: current.dniResponsable,
+      recargo: 21, // Suponiendo que siempre es 21% de recargo por IVA
+      productos: productos,
+      fechaPedido: new Date().toISOString(), // Fecha actual del pedido
+      estado: 'en proceso' // Estado por defecto
     });
 
     // Guardar la orden en la base de datos
-    await order.save();
+    const ordenGuardada = await nuevaOrden.save();
 
-    // Actualizar el estado del carrito a "procesado"
-    cart.estado = 'procesado';
-    await cart.save();
-
-    // Devolver la orden creada como respuesta
-    res.status(201).json({ order });
+    res.status(201).json({ order: ordenGuardada });
   } catch (error) {
-    console.error('Error al convertir el carrito en orden:', error);
+    console.error('Error al convertHOLAHJASHSDASDSAarrito en orden:', error);
     res.status(500).json({ error: 'Error al convertir el carrito en orden' });
   }
 });
