@@ -110,6 +110,7 @@ const ListProduct = () => {
 </div>
 
   );
+  
   //   <div>
   //     <h1>Lista de Productos</h1>
   //     {products.map((product) => (

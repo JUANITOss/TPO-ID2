@@ -108,8 +108,6 @@ function AddProduct() {
     </div>
   </div>
   );
-
-
 }
 
 export default AddProduct;
