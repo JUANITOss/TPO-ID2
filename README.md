@@ -6,6 +6,11 @@ Proyecto hecho con mucho amor para la materia de Ingenieria de Datos II de la UA
 
 **Disclaimer! El proyecto solo se puede visualizar desde localhost.**
 
+## Cosas faltantes...
+
+* Nos falta manejar Order correctamente.
+* Nos falta conectar la Order a una Bill.
+
 ## Para ejecutar el codigo...
 
 * Se seben iniciar los hosts locales de las Dbs de Redis y MongoDB

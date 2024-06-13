@@ -189,6 +189,7 @@ const CartForm = ({ carrito, setCarrito }) => {
                 </div>
               </div>
               <span className="text-right font-semibold">{`$${producto.precio}`}</span>
+              <span className="text-right font-semibold">{`Total de producto: $${producto.precio * producto.cantidadInput}`}</span>
             </li>
           ))}
         </ul>
