@@ -51,6 +51,23 @@ router.put('/updateProduct/:_id', async (req, res) => {
   }
 });
 
+// Eliminar producto
+router.delete('/deleteProduct/:_id', async (req, res) => {
+
+  try {
+    const result = await Product.deleteOne({ _id: req.params._id });
+
+    if (!result) {
+      return res.status(404).send({ message: 'Producto no encontrado' });
+    }
+
+    res.send({ message: 'Producto eliminado correctamente' });
+  } catch (error) {
+    res.status(500).send({ message: 'Hubo un error al intentar eliminar el producto', error: error.message });
+  }
+});
+
+
 // Agregar producto a carrito
 router.post('/productToCart', async (req, res) => {
   try {
