@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../api';
 
 const BillForm = () => {
   const [orderId, setOrderId] = useState('');
@@ -21,9 +21,8 @@ const BillForm = () => {
     };
 
     try {
-      const response = await axios.post('/api/bills', newBill);
+      const response = await api.post('/bill/createBill', newBill);
       console.log('New bill created:', response.data);
-      // Limpiar el formulario después de la creación exitosa
       setOrderId('');
       setUserId('');
       setProductos([]);
