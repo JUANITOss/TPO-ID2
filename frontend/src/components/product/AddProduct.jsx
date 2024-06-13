@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import api from '../../api';
-import '../estilosCSS/addProductCSS.css'; // Asegúrate de importar el archivo CSS
+import '../estilosCSS/addProductCSS.css';
 
 function AddProduct() {
   const [product, setProduct] = useState({
@@ -14,7 +14,6 @@ function AddProduct() {
     e.preventDefault();
     try {
       const response = await api.post('/product/addProduct', product);
-      // Manejar la respuesta del servidor
       console.log(response.data);
     } catch (error) {
       console.error(error);

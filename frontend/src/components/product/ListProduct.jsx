@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../api';
 
-const ProductComponent = () => {
+const ListProduct = () => {
   const [products, setProducts] = useState([]);
-  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -18,21 +17,27 @@ const ProductComponent = () => {
     fetchProducts();
   }, []);
 
-  const handleAddToCart = async (product) => {
+  const handleAddToCart = async (product, quantity) => {
     try {
-      console.log(product);
       const payload = {
         _id: product._id,
         nombreProducto: product.nombreProducto,
         cantidad: quantity,
         precioUnitario: product.precio,
       };
-      console.log('Payload enviado:', payload);
       const response = await api.post('/product/productToCart', payload);
       console.log(response.data.message);
     } catch (error) {
       console.error('Error al agregar producto al carrito:', error);
     }
+  };
+
+  const handleQuantityChange = (productId, newQuantity) => {
+    setProducts(prevProducts =>
+      prevProducts.map(product =>
+        product._id === productId ? { ...product, quantity: newQuantity } : product
+      )
+    );
   };
 
   return (
@@ -46,14 +51,14 @@ const ProductComponent = () => {
           <input
             type="number"
             min="1"
-            value={quantity}
-            onChange={(e) => setQuantity(parseInt(e.target.value))}
+            value={product.quantity || 1}
+            onChange={(e) => handleQuantityChange(product._id, parseInt(e.target.value))}
           />
-          <button onClick={() => handleAddToCart(product)}>Agregar al carrito</button>
+          <button onClick={() => handleAddToCart(product, product.quantity || 1)}>Agregar al carrito</button>
         </div>
       ))}
     </div>
   );
 };
 
-export default ProductComponent;
+export default ListProduct;
