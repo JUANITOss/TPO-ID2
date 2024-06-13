@@ -39,10 +39,10 @@ const CartInfo = () => {
       <div className="flex items-center justify-between">
         <h1 className="text-white text-2xl font-bold">Add Products</h1>
         <div className="flex items-center space-x-4">
-          <Link to="/Main">
+          <Link to="/list-product">
             <button 
               className="nav-link inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white">
-              Home
+              Continue Shopping
             </button>
           </Link>
           <Link to="/">
@@ -65,17 +65,12 @@ const CartInfo = () => {
             </React.Fragment>
           )}
           <div className=''>
+          
           <button 
             className="inline-flex items-center justify-center whitespace-nowrap text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"
             onClick={handleConvertToOrder}>
               Create Order
           </button>
-          <Link to="/list-product">
-            <button 
-              className="inline-flex items-center justify-center whitespace-nowrap text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
-                Continue Shopping
-            </button>
-          </Link>
           </div>
         </div>
       </div>
@@ -84,10 +79,11 @@ const CartInfo = () => {
 };
 
 const CartForm = ({ carrito, setCarrito }) => {
+  
   const [productos, setProductos] = useState(
     carrito.map(producto => ({
       ...producto,
-      cantidadInput: producto.cantidad.toString()
+      cantidadInput: producto.cantidad.toString(),
     }))
   );
 
@@ -175,7 +171,8 @@ const CartForm = ({ carrito, setCarrito }) => {
                   
                 </div>
               </div>
-              <div className="text-right font-semibold">{`$${producto.precio}`}</div>
+              <span className="text-right font-semibold">{`$${producto.precio}`}</span>
+              <span className="text-right font-semibold">{`Total de producto: $${producto.precio * producto.cantidadInput}`}</span>
             </li>
           ))}
         </ul>
