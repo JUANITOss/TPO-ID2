@@ -21,10 +21,18 @@ router.put('/modifiyCart', async (req, res) => {
     const carrito = await Cart.findOne({ userId: user });
 
     if (carrito) {
+      
       productos.forEach(({ _id, cantidad }) => {
         const productoEnCarrito = carrito.productos.find(producto => producto._id.toString() === _id);
+      
         if (productoEnCarrito) {
-          productoEnCarrito.cantidad = cantidad;
+          if (cantidad === 0) {
+            // Eliminar el producto del carrito si la cantidad es 0
+            carrito.productos = carrito.productos.filter(producto => producto._id.toString() !== _id);
+          } else {
+            // Actualizar la cantidad del producto en el carrito
+            productoEnCarrito.cantidad = cantidad;
+          }
         }
       });
 
