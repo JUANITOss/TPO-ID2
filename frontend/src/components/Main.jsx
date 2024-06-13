@@ -65,4 +65,8 @@ const Main = () => {
   );
 };
 
+<<<<<<< HEAD
 export default Main;
+=======
+export default Main;
+>>>>>>> be53a99 (caca)
