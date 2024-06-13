@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import api from '../../api';
-import '../estilosCSS/addProductCSS.css';
 import { Link } from 'react-router-dom';
 
 function AddProduct() {
