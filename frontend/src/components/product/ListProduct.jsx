@@ -65,9 +65,6 @@ const ListProduct = () => {
         <thead class="[&amp;_tr]:border-b">
           <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
             <th class="text-white h-12 px-4 text-left align-middle font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-              Image
-            </th>
-            <th class="text-white h-12 px-4 text-left align-middle font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
               Name
             </th>
             <th class="text-white h-12 px-4 text-left align-middle font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
@@ -84,15 +81,6 @@ const ListProduct = () => {
         <tbody class="[&amp;_tr:last-child]:border-0">
           {products.map((product) => (
             <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-              <td class="text-white p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                <img
-                  src="/placeholder.svg"
-                  alt={product.nombreProducto}
-                  width="64"
-                  height="64"
-                  class="aspect-square rounded-md object-cover"
-                />
-              </td>
               <td class="text-white p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-bold">{product.nombreProducto}</td>
               <td class="text-white p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{product.descripcion}</td>
               <td class="text-white p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">${product.precio}</td>
