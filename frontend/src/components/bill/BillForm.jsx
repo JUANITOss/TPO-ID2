@@ -54,6 +54,14 @@ const BillForm = () => {
           Usuario ID:
           <input type="text" value={userId} onChange={(e) => setUserId(e.target.value)} required />
         </label>
+        {/* <label>
+          Productos:
+          <input type="text" value={productos} onChange={(e) => setProductos(e.target.value)} required />
+        </label> */}
+        <label>
+          Fecha Factura:
+          <input type="text" value={fechaFactura} onChange={(e) => setFechaFactura(e.target.value)} required />
+        </label>
         {/* Aquí añadir más campos según sea necesario para productos, total, fechaFactura, pagos */}
         <button type="submit">Crear Factura</button>
       </form>

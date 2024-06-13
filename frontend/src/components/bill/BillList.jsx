@@ -56,7 +56,9 @@ const BillList = () => {
       <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
         <th class="text-white h-12 px-4 text-left align-middle font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">OrderId</th>
         <th class="text-white h-12 px-4 text-left align-middle font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">Usuario ID</th>
+        <th class="text-white h-12 px-4 text-left align-middle font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">Productos</th>
         <th class="text-white h-12 px-4 text-left align-middle font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">Total</th>
+        <th class="text-white h-12 px-4 text-left align-middle font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">Fecha Factura</th>
         <th class="text-white h-12 px-4 text-left align-middle font-bold text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">Acción</th>
       </tr>
     </thead>
@@ -65,11 +67,13 @@ const BillList = () => {
         <tr key={bill._id} class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
           <td class="text-white p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-bold">{bill.orderId}</td>
           <td class="text-white p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-bold">{bill.userId}</td>
+          <td class="text-white p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-bold">{bill.productos}</td>
           <td class="text-white p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-bold">{bill.total}</td>
+          <td class="text-white p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-bold">{bill.fechaFactura}</td>
           <td className="">
           <button
               className="inline-block p-3 text-white hover:bg-red-500 focus:relative"
-              title="Delete Product"
+              title="Delete Bill"
               onClick={() => handleDeleteBill(bill.orderId)}
             >
               <svg
@@ -89,7 +93,7 @@ const BillList = () => {
             </button>
             <button
               class="inline-block p-3 text-white hover:bg-green-500 focus:relative"
-              title="View Orders"
+              title="Proceed to Pay"
               //onClick={agregar onClick de pagar aca}
             >
               <svg
