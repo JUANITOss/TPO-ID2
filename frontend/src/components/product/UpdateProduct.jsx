@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import api from '../../api';
 
 const UpdateProduct = () => {
@@ -73,11 +73,23 @@ const UpdateProduct = () => {
   
 
   return (
-    <div className="flex flex-col gap-6 p-6 md:p-8 bg-neutral-800">
-      <div className="flex items-center justify-between">
-        <h1 className="text-white text-2xl font-bold">Products</h1>
-      </div>
-
+    <div class="flex flex-col gap-6 p-6 md:p-8 bg-neutral-800">
+    <div class="flex items-center justify-between">
+     <h1 class="text-white text-2xl font-bold">Update Products</h1>
+      <div className="flex items-center justify-self-end space-x-4">
+     <Link to="/Main">
+       <button 
+        className="nav-link inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white">
+            Home
+      </button>
+    </Link>
+    <Link to="/">
+        <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white">
+            Logout
+        </button>
+    </Link>
+    </div>
+    </div>
       <div className="h-screen bg-neutral-800">
         <h2 className="text-white text-xl font-bold">Selecciona un Producto para Actualizar</h2>
         <table className="w-full caption-bottom text-sm">
@@ -196,6 +208,7 @@ const UpdateProduct = () => {
         )}
       </div>
     </div>
+    
   );
 };
 
