@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import api from '../../api';
 
 const CartInfo = () => {
-
   const [carrito, setCarrito] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,7 +9,7 @@ const CartInfo = () => {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const response = await api.get('/cart/getCart');
+        const response = await api.get('/cart/getCart'); // Ajusta la URL según tu configuración
         setCarrito(response.data.productos);
         setLoading(false);
       } catch (err) {
@@ -22,17 +21,11 @@ const CartInfo = () => {
     fetchCart();
   }, []);
 
-  const handleConvertToOrder = async () => {
-    try {
-      const response = await api.post('/cart/cartToOrder');
-      alert('Carrito convertido a orden con éxito');
-      await api.get('/order/allOrders');
-
-    } catch (error) {
-      console.error('Error al convertir el carrito en orden:', error);
-    }
+  const handleConvertToOrder = () => {
+    // Placeholder function for future implementation
+    console.log('Convertir el carrito en una orden');
+    alert('Esta funcionalidad estará disponible próximamente');
   };
-  
 
   if (loading) return <div>Cargando...</div>;
   if (error) return <div>Error al cargar el carrito</div>;
@@ -53,56 +46,37 @@ const CartInfo = () => {
 };
 
 const CartForm = ({ carrito, setCarrito }) => {
-  const [productos, setProductos] = useState(carrito.map(producto => ({
-    ...producto,
-    cantidadInput: producto.cantidad.toString()  // Agregar campo cantidadInput para manejar el input de forma independiente
-  })));
+  const [productos, setProductos] = useState(carrito);
 
-  const handleChange = (index, cantidad) => {
-    // Crear una copia del array de productos para mantener inmutabilidad
-    const updatedProductos = [...productos];
-    // Actualizar solo el producto específico que está siendo modificado
-    updatedProductos[index] = {
-      ...updatedProductos[index],
-      cantidadInput: cantidad  // Actualizar cantidadInput para reflejar el valor del input
-    };
-    setProductos(updatedProductos);
+  const handleChange = (productoId, cantidad) => {
+    setProductos(productos.map(producto =>
+      producto.productoId === productoId
+        ? { ...producto, cantidad: parseInt(cantidad, 10) }
+        : producto
+    ));
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const productosToUpdate = productos.map(producto => ({
-        _id: producto._id,
-        cantidad: parseInt(producto.cantidadInput, 10)
-      }));
-  
-      console.log('Productos a actualizar:', productosToUpdate);  // Verifica en la consola del navegador
-  
-      const response = await api.put('/cart/modifiyCart', { productos: productosToUpdate });
-  
-      console.log('Respuesta del servidor:', response.data);  // Verifica la respuesta del servidor
-  
-      // Actualizar el carrito local en CartInfo después de la modificación
+      const response = await api.put('/cart/modifiyCart', { productos });
       setCarrito(response.data.carrito.productos);
-  
       alert('Carrito modificado con éxito');
     } catch (error) {
-      console.error('Error al modificar el carrito:', error);
+      console.error('Error al modificar el carrito', error);
       alert('Hubo un error al modificar el carrito');
     }
   };
-    
 
   return (
     <form onSubmit={handleSubmit}>
-      {productos.map((producto, index) => (
+      {productos.map(producto => (
         <div key={producto.productoId} className="cart-item">
           <span>{producto.nombreProducto}</span>
           <input
             type="number"
-            value={producto.cantidadInput}
-            onChange={(e) => handleChange(index, e.target.value)}
+            value={producto.cantidad}
+            onChange={(e) => handleChange(producto.productoId, e.target.value)}
             min="0"
           />
         </div>
@@ -113,4 +87,3 @@ const CartForm = ({ carrito, setCarrito }) => {
 };
 
 export default CartInfo;
-
