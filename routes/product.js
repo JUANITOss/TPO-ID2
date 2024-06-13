@@ -72,7 +72,7 @@ router.delete('/deleteProduct/:_id', async (req, res) => {
 router.post('/productToCart', async (req, res) => {
   try {
       const user = req.session.userId;
-      const { _id, nombreProducto, cantidad, precio } = req.body;
+      const { nombreProducto, cantidad, precio } = req.body;
 
       const carrito = await Cart.findOne({ userId: user });
 

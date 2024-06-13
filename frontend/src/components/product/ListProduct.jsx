@@ -21,11 +21,11 @@ const ListProduct = () => {
   const handleAddToCart = async (product, quantity) => {
     try {
       const payload = {
-        _id: product._id,
         nombreProducto: product.nombreProducto,
         cantidad: quantity,
-        precioUnitario: product.precio,
+        precio: product.precio,
       };
+      console.log(payload.precio);
       const response = await api.post('/product/productToCart', payload);
       console.log(response.data.message);
     } catch (error) {

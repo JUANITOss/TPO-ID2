@@ -7,7 +7,7 @@ const CartSchema = new mongoose.Schema({
       productoId: String,
       nombreProducto: String,
       cantidad: Number,
-      precioUnitario: Number
+      precio: Number,
     }
   ],
   estado: String
