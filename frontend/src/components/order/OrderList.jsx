@@ -30,9 +30,9 @@ const OrderList = ({ userId }) => {
 
   return (
     <div>
-      <h2>Pedidos</h2>
+      <h2>Order</h2>
       {orders.length === 0 ? (
-        <p>No hay pedidos por realizar.</p>
+        <p>No hay orders.</p>
       ) : (
         <ul>
           {orders.map(order => (

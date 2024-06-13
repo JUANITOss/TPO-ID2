@@ -9,7 +9,11 @@ import Main from './components/Main';
 import AddProduct from './components/product/AddProduct';
 import ListProduct from './components/product/ListProduct';
 import UpdateProduct from './components/product/UpdateProduct';
+<<<<<<< HEAD
 import CartInfo from './components/cart/CartInfo'; 
+=======
+import CartInfo from './components/cart/CartInfo';
+>>>>>>> c0a82dd9b85e45e53b236ab09f0edc0057d19f71
 import OrderList from './components/order/OrderList';
 
 function App() {

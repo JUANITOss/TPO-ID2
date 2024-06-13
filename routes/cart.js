@@ -2,7 +2,16 @@ const express = require('express');
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const router = express.Router();
+const Order = require('../models/Order');
 
+<<<<<<< HEAD
+=======
+// FALTA
+// MODIFICAR CARRITO
+// VACIAR CARRITO
+// CONVERTIR CARRITO A PEDIDO
+
+>>>>>>> c0a82dd9b85e45e53b236ab09f0edc0057d19f71
 // MODIFICAR CARRITO
 router.put('/modifiyCart', async (req, res) => {
   try {
@@ -66,5 +75,39 @@ router.get('/getCart', async (req, res) => {
         res.status(500).send({ message: 'Error al obtener el carrito del usuario', error });
     }
 });
+
+//CONVERTIR CARRITO A PEDIDO
+router.post('/cartToOrder', async (req, res) => {
+  try {
+      const user = req.session.userId;
+      const carrito = await Cart.findOne({ userId: user });
+
+      if (!carrito) {
+          return res.status(404).send({ message: 'Carrito no encontrado' });
+      }
+
+      if (carrito.productos.length === 0) {
+          return res.status(400).send({ message: 'El carrito está vacío' });
+      }
+
+      const nuevoPedido = new Order({
+          userId: user,
+          productos: carrito.productos,
+          fecha: new Date(),
+          estado: 'pendiente'
+      });
+
+      await nuevoPedido.save();
+
+      // Vaciar el carrito después de convertirlo a pedido
+      carrito.productos = [];
+      await carrito.save();
+
+      res.send({ message: 'Carrito convertido a pedido con éxito', pedido: nuevoPedido });
+  } catch (error) {
+      res.status(500).send({ message: 'Error al convertir el carrito a pedido', error });
+  }
+});
+
 
 module.exports = router; 
