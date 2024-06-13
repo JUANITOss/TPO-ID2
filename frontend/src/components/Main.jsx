@@ -31,7 +31,7 @@ const Main = () => {
                         </div>
                 </div>
       {/* body */}
-      <div className='flex items-center justify-center bg-neutral-800'
+      <div className='flex items-center bg-neutral-800 justify-center'
             style={{paddingTop: '100px' }}
             >
        <nav>
@@ -49,8 +49,16 @@ const Main = () => {
             <Link to="/list-order" className="nav-link inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white">Ver Facturas</Link>
           </li>
           <li>
+            <Link to="/create-bill" className="nav-link inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white">Create bill</Link>
+          </li>
+          <li>
             <Link to="/list-bills" className="nav-link inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white">Ver Bills</Link>
           </li>
+          <li>
+            <Link to="/update-bill" className="nav-link inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white">Actualizar Bills</Link>
+          </li>
+          
+          
         </ul>
       </nav> 
      </div>

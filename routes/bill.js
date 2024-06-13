@@ -43,31 +43,37 @@ router.get('/getBillsId', getBill, (req, res) => {
 });
 
 // Ruta para actualizar una factura (PUT /updateBillId)
-router.put('/updateBillId', getBill, async (req, res) => {
-  if (req.body.orderId != null) {
-    res.bill.orderId = req.body.orderId;
-  }
-  if (req.body.userId != null) {
-    res.bill.userId = req.body.userId;
-  }
-  if (req.body.productos != null) {
-    res.bill.productos = req.body.productos;
-  }
-  if (req.body.total != null) {
-    res.bill.total = req.body.total;
-  }
-  if (req.body.fechaFactura != null) {
-    res.bill.fechaFactura = req.body.fechaFactura;
-  }
-  if (req.body.pagos != null) {
-    res.bill.pagos = req.body.pagos;
-  }
-
+router.put('/updateBillId/:billId', getBill, async (req, res) => {
   try {
-    const updatedBill = await res.bill.save();
-    res.send(updatedBill);
+    const bill = await Bill.findById(req.params.billId);
+
+    if (!bill) {
+      return res.status(404).json({ message: 'Factura no encontrada' });
+    }
+
+    if (req.body.orderId !== undefined) {
+      bill.orderId = req.body.orderId;
+    }
+    if (req.body.userId !== undefined) {
+      bill.userId = req.body.userId;
+    }
+    if (req.body.productos !== undefined) {
+      bill.productos = req.body.productos;
+    }
+    if (req.body.total !== undefined) {
+      bill.total = req.body.total;
+    }
+    if (req.body.fechaFactura !== undefined) {
+      bill.fechaFactura = req.body.fechaFactura;
+    }
+    if (req.body.pagos !== undefined) {
+      bill.pagos = req.body.pagos;
+    }
+
+    const updatedBill = await bill.save();
+    res.json(updatedBill);
   } catch (err) {
-    res.status(400).send({ message: err.message });
+    res.status(400).json({ message: err.message });
   }
 });
 
@@ -82,19 +88,20 @@ router.get('/getBills', async (req, res) => {
 });
 
 // Ruta para eliminar una factura (DELETE /deleteBillId/:billId)
-router.delete('/deleteBillId/:billId', async (req, res) => {
-    try {
-      const billId = req.params.billId; // Obtener el billId de los parámetros de la URL
-      const bill = await Bill.findById(billId);
-      if (!bill) {
-        return res.status(404).json({ message: 'Cannot find bill with the provided ID' });
-      }
-  
-      await bill.remove();
-      res.send({ message: 'Deleted Bill' });
-    } catch (err) {
-      res.status(500).send({ message: err.message });
-    }
-  });
-  
+router.delete('/deleteBillId/:orderId', async (req, res) => {
+  try {
+    const delId = req.params.orderId; // Obtener el billId de los parámetros de la URL
+
+    // Buscar la factura y borrarla
+    await Bill.findOneAndDelete({ orderId: delId });
+
+    // Responder con un mensaje de éxito
+    res.send({ message: 'Deleted Bill' });
+  } catch (err) {
+    // Manejar errores y responder con un código de estado 500 si ocurre un problema
+    res.status(500).send({ message: err.message });
+  }
+});
+
+
 module.exports = router;

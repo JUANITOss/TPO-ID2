@@ -118,7 +118,7 @@ app.use('/login', loginRoutes);
 app.use('/product', handleOptions, productRoutes);
 app.use('/cart', handleOptions, cartRoutes);
 app.use('/order', handleOptions, orderRoutes);
-//app.use('/bill', handleOptions, invoiceRoutes);
+app.use('/bill', handleOptions, billRoutes);
 
 // Ruta de prueba
 app.get('/api/test', (req, res) => {
