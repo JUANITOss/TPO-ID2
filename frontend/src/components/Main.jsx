@@ -22,12 +22,12 @@ const Main = () => {
   };
 
   return (
-    <section className="flex flex-col justify-center items-center h-screen bg-neutral-800">
+    <section className="flex flex-col items-center h-screen bg-neutral-800">
       <div className="self-start mb-20 container grid gap-6 md:gap-8 px-4 md:px-6 bg-neutral-800">
         <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8" style={{ marginTop: '75px' }}>
-          <h2 className="text-2xl font-bold tracking-tight text-white">Explore Our Products</h2>
+          <h2 className="text-2xl font-bold tracking-tight text-white">ADMIN VIEW</h2>
           <p className="text-gray-400 max-w-md">
-            Browse through our wide range of products and find the perfect items for your needs
+            Use options to manage your website
           </p>
           <div className="flex items-center gap-2 ml-auto shrink-0">
             <Link to="/info-cart">
