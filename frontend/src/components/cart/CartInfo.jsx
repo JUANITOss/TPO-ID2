@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../api';
+import { useNavigate } from 'react-router-dom';
 
 const CartInfo = () => {
 
   const [carrito, setCarrito] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -24,10 +26,7 @@ const CartInfo = () => {
 
   const handleConvertToOrder = async () => {
     try {
-      const response = await api.post('/cart/cartToOrder');
-      alert('Carrito convertido a orden con éxito');
-      await api.get('/order/allOrders');
-
+      navigate('/create-order');
     } catch (error) {
       console.error('Error al convertir el carrito en orden:', error);
     }

@@ -1,47 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import api from '../../api';
+import React, { useState, useEffect } from 'react';
+import api from '../../api'; // Asegúrate de que esta ruta es correcta
 
-const OrderList = ({ userId }) => {
+const OrderList = () => {
   const [orders, setOrders] = useState([]);
-
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await api.get(`/pedidos/${userId}`);
+        const response = await api.get('/order/getOrders');
         setOrders(response.data);
-      } catch (error) {
-        console.error('Error fetching orders:', error);
+        setLoading(false);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
       }
     };
 
     fetchOrders();
-  }, [userId]);
+  }, []);
 
-  const facturarPedido = async (orderId) => {
-    try {
-      const response = await api.post(`/pedidos/${orderId}/factura`);
-      alert('Pedido facturado con éxito');
-      const updatedOrders = orders.map(order => order.orderId === orderId ? response.data : order);
-      setOrders(updatedOrders);
-    } catch (error) {
-      console.error('Error facturando pedido:', error);
-    }
-  };
+  if (loading) return <div>Cargando...</div>;
+  if (error) return <div>Error al cargar las órdenes: {error.message}</div>;
 
   return (
-    <div>
-      <h2>Order</h2>
+    <div className="order-container">
+      <h2>Mis Órdenes</h2>
       {orders.length === 0 ? (
-        <p>No hay orders.</p>
+        <div>No tienes órdenes</div>
       ) : (
-        <ul>
-          {orders.map(order => (
-            <li key={order.orderId}>
-              Pedido ID: {order.orderId} - Estado: {order.estado}
-              <button onClick={() => facturarPedido(order.orderId)}>Facturar</button>
-            </li>
-          ))}
-        </ul>
+        orders.map(order => (
+          <div key={order._id} className="order-item">
+            <h3>Orden ID: {order._id}</h3>
+            <p>Nombre del responsable: {order.nombreResponsable}</p>
+            <p>Apellido del responsable: {order.apellidoResponsable}</p>
+            <p>Fecha del pedido: {order.fechaPedido}</p>
+            <p>Estado: {order.estado}</p>
+            <h4>Productos:</h4>
+            <ul>
+              {order.productos.map((producto, index) => (
+                <li key={index}>
+                  {producto.nombreProducto} - Total: {producto.total} - Descuento: {producto.descuento} - Impuesto: {producto.impuesto}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
       )}
     </div>
   );

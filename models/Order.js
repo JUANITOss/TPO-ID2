@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const OrderSchema = new mongoose.Schema({
-  userId: String,
-  nombreResponsable: String,
-  apellidoResponsable: String,
+  userId: String, // rec sessions
+  nombreResponsable: String, // lo da el usuario (input)
+  apellidoResponsable: String, // lo da el usuario (input)
   recargo: Number, // IVA -- SET TO 21
   productos: [
     {
@@ -13,8 +13,8 @@ const OrderSchema = new mongoose.Schema({
       impuesto: Number, // Setteado a mano para los propositos de la entrega, agregar el recargo
     }
   ],
-  fechaPedido: String,
-  estado: String
+  fechaPedido: String, // date
+  estado: String // en proceso (default)
 });
 
 module.exports = mongoose.model('Order', OrderSchema);

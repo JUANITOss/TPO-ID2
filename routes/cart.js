@@ -82,6 +82,13 @@ router.post('/cartToOrder', async (req, res) => {
       return res.status(400).send({ message: 'El carrito está vacío' });
     }
 
+    const productosPedido = carrito.productos.map(producto => ({
+      nombreProducto: producto.nombreProducto,
+      total: producto.cantidad * producto.precioUnitario,
+      descuento: 0, // Puedes ajustar esto según tu lógica de descuentos
+      impuesto: producto.cantidad * producto.precioUnitario * 0.21, // Ejemplo de impuesto (IVA)
+    }));
+    
     const nuevoPedido = new Order({
       userId: user,
       productos: carrito.productos,

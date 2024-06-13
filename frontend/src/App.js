@@ -14,6 +14,7 @@ import OrderList from './components/order/OrderList';
 import BillList from './components/bill/BillList';
 import BillForm from './components/bill/BillForm';
 import UpdateBillForm from './components/bill/UpdateBillForm';
+import OrderCreate from './components/order/OrderCreate'; 
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/list-bills" exact component={<BillList />} />
           <Route path="/bills/new" component={<BillForm />} />
           <Route path="/bills/update/:id" render={(props) => <UpdateBillForm billId={props.match.params.id} />} />
+          <Route path="/create-order" element={<OrderCreate />} />
         </Routes>
       </div>
     </Router>
