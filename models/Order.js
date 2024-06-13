@@ -4,6 +4,7 @@ const OrderSchema = new mongoose.Schema({
   userId: String, // rec sessions
   nombreResponsable: String, // lo da el usuario (input)
   apellidoResponsable: String, // lo da el usuario (input)
+  dniResponsable: String,
   recargo: Number, // IVA -- SET TO 21
   productos: [
     {
