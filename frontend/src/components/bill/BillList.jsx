@@ -16,11 +16,12 @@ const BillList = () => {
       console.error('Error fetching bills:', error);
     }
   };
-
+ 
   const handleDeleteBill = async (id) => {
     try {
+      // Aquí asegúrate de pasar correctamente el ID
       await api.delete(`/bill/deleteBillId/${id}`);
-      fetchBills();
+      fetchBills(); // Refrescar la lista después de eliminar
     } catch (error) {
       console.error('Error deleting bill:', error);
     }
@@ -38,7 +39,8 @@ const BillList = () => {
               <p>OrderId: {bill.orderId}</p>
               <p>Usuario ID: {bill.userId}</p>
               <p>Total: {bill.total}</p>
-              <button onClick={() => handleDeleteBill(bill._id)}>Eliminar</button>
+              {/* Asegúrate de pasar el _id correcto al llamar handleDeleteBill */}
+              <button onClick={() => handleDeleteBill(bill.orderId)}>Eliminar</button>
               <hr />
             </li>
           ))}
