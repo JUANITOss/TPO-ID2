@@ -41,7 +41,7 @@ const BillForm = () => {
   };
 
   return (
-    <div>
+    <div className='bg-neutral-800 h-screen'>
       <h2>Crear Nueva Factura</h2>
       {message && <p style={{ color: 'green' }}>{message}</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}

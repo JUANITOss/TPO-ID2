@@ -51,23 +51,21 @@ const UpdateProduct = () => {
     }
   };
 
+  const fetchProducts = async () => {
+    try {
+      const response = await api.get('/product/getProduct');
+      setProducts(response.data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
+
   const handleDeleteProduct = async (productId) => {
     try {
       await api.delete(`/product/deleteProduct/${productId}`);
-      console.log('Producto eliminado con éxito');
+      fetchProducts();
     } catch (error) {
-      if (error.response) {
-        // La solicitud fue realizada y el servidor respondió con un código de estado que no está en el rango de 2xx
-        console.error('Error al eliminar el producto:', error.response.data.message);
-        navigate('/main'); // Redirigir a la lista de productos después de actualizar
-        
-      } else if (error.request) {
-        // La solicitud fue realizada pero no se recibió respuesta
-        console.error('No se recibió respuesta al eliminar el producto:', error.request);
-      } else {
-        // Ocurrió un error al configurar la solicitud
-        console.error('Error al configurar la solicitud al eliminar el producto:', error.message);
-      }
+      console.error('Error deleting product:', error);
     }
   };
   
