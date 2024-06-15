@@ -27,7 +27,7 @@ const Main = () => {
         <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8" style={{ marginTop: '75px' }}>
           <h2 className="text-2xl font-bold tracking-tight text-white">ADMIN VIEW</h2>
           <p className="text-gray-400 max-w-md">
-            Use options to manage your website
+            Press the buttons to access the operatios available.
           </p>
           <div className="flex items-center gap-2 ml-auto shrink-0">
             <Link to="/info-cart">
@@ -106,6 +106,7 @@ const Main = () => {
             </li>
           </ul>
         </nav>
+        <p>luispa la avispa is real</p>
       </div>
     </section>
   );
