@@ -90,6 +90,7 @@ router.get('/getCart', async (req, res) => {
   }
 });
 
+// CONVERTIR CARRITO A ORDEN
 router.post('/cartToOrder', async (req, res) => {
   const { cart, current } = req.body;
 
