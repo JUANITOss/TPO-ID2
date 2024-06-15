@@ -53,56 +53,104 @@ const OrderCreate = () => {
 
  
   return (
-    <div>
-      <h1>Crear Orden</h1>
-      {cart ? (
-        <div>
-          <h2>Carrito Actual</h2>
-          <div className="mb-4">
-            <label className="block text-white mb-2">Nombre:</label>
+  <div style={{ backgroundColor: '#333333', padding: '20px', borderRadius: '8px', color: 'white' }}>
+    <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Crear Orden</h1>
+    {cart ? (
+      <div style={{ backgroundColor: '#444444', padding: '20px', borderRadius: '8px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
+        <h2 style={{ marginBottom: '10px', color: 'white' }}>Carrito Actual</h2>
+        <div className="mb-4">
+          <label className="block text-white mb-2">Nombre:</label>
           <input 
-            type="string" 
+            type="text" 
             name="nombreResponsable" 
             value={current.nombreResponsable} 
             onChange={handleChange}
             className='w-full px-3 py-2 border border-gray-300 rounded-md'
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-white mb-2">Apellido:</label>
+            style={{ backgroundColor: '#555555', color: 'white' }}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-white mb-2">Apellido:</label>
           <input 
-            type="string" 
+            type="text" 
             name="apellidoResponsable" 
             value={current.apellidoResponsable} 
             onChange={handleChange}
             className='w-full px-3 py-2 border border-gray-300 rounded-md'
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-white mb-2">DNI:</label>
+            style={{ backgroundColor: '#555555', color: 'white' }}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-white mb-2">DNI:</label>
           <input 
-            type="string" 
+            type="text" 
             name="dniResponsable" 
             value={current.dniResponsable} 
             onChange={handleChange}
             className='w-full px-3 py-2 border border-gray-300 rounded-md'
-            />
-          </div>
-            <br />
-          <button onClick={handleSubmit}>Convertir Carrito a Orden</button>
+            style={{ backgroundColor: '#555555', color: 'white' }}
+          />
         </div>
-      ) : (
-        <p>Cargando carrito...</p>
-      )}
-      {error && <p>{error}</p>}
-      {order && (
-        <div>
-          <h2>Orden Creada</h2>
+        <button 
+          onClick={handleSubmit} 
+          style={{
+            backgroundColor: '#4CAF50',
+            color: 'white',
+            padding: '10px 20px',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            display: 'block',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
+        >
+          Convertir Carrito a Orden
+        </button>
+      </div>
+    ) : (
+      <p style={{ textAlign: 'center' }}>Cargando carrito...</p>
+    )}
+    {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+    {/* {order && (
+      <div style={{ backgroundColor: '#444444', padding: '20px', borderRadius: '8px', marginTop: '20px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', color: 'white' }}>
+        <h2 style={{ marginBottom: '10px', textAlign: 'center' }}>Orden Creada</h2>
+        <div style={{ overflowX: 'auto' }}>
           <pre>{JSON.stringify(order, null, 2)}</pre>
         </div>
-      )}
+      </div>
+    )} */}
+{order && (
+  <div style={{ backgroundColor: '#444444', padding: '20px', borderRadius: '8px', marginTop: '20px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', color: 'white' }}>
+    <h2 style={{ marginBottom: '10px', textAlign: 'center' }}>Orden Creada</h2>
+    <div style={{ overflowX: 'auto' }}>
+      <pre style={{ whiteSpace: 'pre-wrap' }}>
+        <p><strong>User ID:</strong> {order.userId}</p>
+        <p><strong>Nombre Responsable:</strong> {order.nombreResponsable}</p>
+        <p><strong>Apellido Responsable:</strong> {order.apellidoResponsable}</p>
+        <p><strong>DNI Responsable:</strong> {order.dniResponsable}</p>
+        <p><strong>Recargo (IVA):</strong> {order.recargo}%</p>
+        <hr />
+        <p><strong>Productos:</strong></p>
+        {order.productos.map((producto, index) => (
+          <div key={index}>
+            <p><strong>Nombre Producto:</strong> {producto.nombreProducto}</p>
+            <p><strong>Total:</strong> {producto.total}</p>
+            <p><strong>Descuento:</strong> {producto.descuento}</p>
+            <p><strong>Impuesto:</strong> {producto.impuesto}</p>
+            <hr /> {/* Separador entre productos */}
+          </div>
+        ))}
+        <p><strong>Fecha Pedido:</strong> {order.fechaPedido}</p>
+        <p><strong>Estado:</strong> {order.estado}</p>
+      </pre>
     </div>
-  );
-};
+  </div>
+)}
+
+
+</div>
+
+)};
 
 export default OrderCreate;
