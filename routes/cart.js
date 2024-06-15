@@ -91,13 +91,14 @@ router.get('/getCart', async (req, res) => {
 });
 
 router.post('/cartToOrder', async (req, res) => {
-
   const { cart, current } = req.body;
+
+  console.log('Datos recibidos en /cart/cartToOrder:', { cart, current });
 
   try {
     // Calcular el total del pedido y construir la estructura de productos
     const productos = cart.productos.map(producto => {
-      const total = producto.cantidad * producto.precioUnitario;
+      const total = producto.cantidad * producto.precio;
       const impuesto = total * 0.21; // Calculando el impuesto (IVA)
 
       return {
@@ -125,7 +126,7 @@ router.post('/cartToOrder', async (req, res) => {
 
     res.status(201).json({ order: ordenGuardada });
   } catch (error) {
-    console.error('Error al convertHOLAHJASHSDASDSAarrito en orden:', error);
+    console.error('Error al convertir el carrito en orden:', error);
     res.status(500).json({ error: 'Error al convertir el carrito en orden' });
   }
 });

@@ -34,11 +34,11 @@ const OrderCreate = () => {
     setError(null);
 
     try {
-      console.log({cart,current});
+
       const response = await api.post('/cart/cartToOrder', {cart,current});
       setOrder(response.data.order);
     } catch (error) {
-      console.error('Error al convertir el carrito en orden:', error);
+      console.error('Error al convertir aaaaaaaaaaaaaaaaaaaaaaaaaaael carrito en orden:', error);
       setError('Error al convertir el carrito en orden');
     }
   };
@@ -58,7 +58,6 @@ const OrderCreate = () => {
       {cart ? (
         <div>
           <h2>Carrito Actual</h2>
-          <pre>{JSON.stringify(cart, null, 2)}</pre>
           <div className="mb-4">
             <label className="block text-white mb-2">Nombre:</label>
           <input 
