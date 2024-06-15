@@ -94,8 +94,6 @@ router.get('/getCart', async (req, res) => {
 router.post('/cartToOrder', async (req, res) => {
   const { cart, current } = req.body;
 
-  console.log('Datos recibidos en /cart/cartToOrder:', { cart, current });
-
   try {
     // Calcular el total del pedido y construir la estructura de productos
     const productos = cart.productos.map(producto => {
@@ -131,4 +129,5 @@ router.post('/cartToOrder', async (req, res) => {
     res.status(500).json({ error: 'Error al convertir el carrito en orden' });
   }
 });
+
 module.exports = router; 
