@@ -10,6 +10,7 @@ const BillForm = () => {
   const [pagos, setPagos] = useState([]);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [order, setOrder] = useOrder('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();

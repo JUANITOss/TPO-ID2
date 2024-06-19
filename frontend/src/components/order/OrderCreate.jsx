@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../api';
+import {useNavigate} from 'react-router-dom';
 
 const OrderCreate = () => {
   const [cart, setCart] = useState(null);
@@ -10,6 +11,7 @@ const OrderCreate = () => {
     apellidoResponsable: '',
     dniResponsable: '',
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -37,6 +39,8 @@ const OrderCreate = () => {
 
       const response = await api.post('/cart/cartToOrder', {cart,current});
       setOrder(response.data.order);
+      //navigate('/main');
+
     } catch (error) {
       console.error('Error al convertir aaaaaaaaaaaaaaaaaaaaaaaaaaael carrito en orden:', error);
       setError('Error al convertir el carrito en orden');
@@ -112,14 +116,6 @@ const OrderCreate = () => {
       <p style={{ textAlign: 'center' }}>Cargando carrito...</p>
     )}
     {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
-    {/* {order && (
-      <div style={{ backgroundColor: '#444444', padding: '20px', borderRadius: '8px', marginTop: '20px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', color: 'white' }}>
-        <h2 style={{ marginBottom: '10px', textAlign: 'center' }}>Orden Creada</h2>
-        <div style={{ overflowX: 'auto' }}>
-          <pre>{JSON.stringify(order, null, 2)}</pre>
-        </div>
-      </div>
-    )} */}
 {order && (
   <div style={{ backgroundColor: '#444444', padding: '20px', borderRadius: '8px', marginTop: '20px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', color: 'white' }}>
     <h2 style={{ marginBottom: '10px', textAlign: 'center' }}>Orden Creada</h2>
@@ -147,8 +143,6 @@ const OrderCreate = () => {
     </div>
   </div>
 )}
-
-
 </div>
 
 )};
