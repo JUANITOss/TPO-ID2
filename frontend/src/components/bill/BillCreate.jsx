@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import api from '../../api'; // Importa tu archivo donde tienes configurado Axios
 
 const BillCreate = () => {
@@ -30,25 +30,43 @@ const BillCreate = () => {
   };
 
   return (
-    <div>
-      <h2>Pagar Factura</h2>
+    <div className="flex flex-col gap-6 p-6 md:p-8 bg-neutral-800">
+    <div className="flex items-center justify-between">
+     <h1 className="text-white text-2xl font-bold">Pay Bill</h1>
+      <div className="flex items-center justify-self-end space-x-4">
+     <Link to="/Main">
+       <button 
+        className="nav-link inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white">
+            Home
+      </button>
+    </Link>
+    </div>
+    </div>
+    <div className="overflow-auto h-screen bg-neutral-800">
+    <div className="relative w-full overflow-auto">
       {orderId ? (
         <form onSubmit={handlePayment}>
-          <label>
-            Método de Pago:
-            <select value={method} onChange={handleMethodChange}>
-              <option value="">Selecciona un método de pago</option>
+    <div className="mb-4">
+        <label className="block text-white mb-2">Payment Method:</label>
+        <select 
+          type="text" 
+          name=""
+          placeholder=" "
+          value={method} 
+          onChange={handleMethodChange} 
+          className='w-full px-3 py-2 border border-gray-300 rounded-md'>
               <option value="MercadoPago">MercadoPago</option>
               <option value="Tarjeta">Tarjeta</option>
               <option value="Transferencia">Transferencia</option>
               <option value="Pago en el local">Pago en el local</option>
-            </select>
-          </label>
-          <button type="submit">Proceder a pago</button>
-        </form>
+          </select>
+         </div>
+         </form>
       ) : (
         <p>No se ha recibido una Order ID</p>
       )}
+    </div>
+    </div>
     </div>
   );
 };
