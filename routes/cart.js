@@ -96,7 +96,7 @@ router.post('/cartToOrder', async (req, res) => {
       const descuento = total * 0; // Modificar en caso de descuentos
 
       return {
-        productoId: producto._id,
+        productoId: producto.productoId,
         nombreProducto: producto.nombreProducto,
         total: total,
         cantidad: producto.cantidad,
