@@ -71,9 +71,9 @@ const UpdateProduct = () => {
   
 
   return (
-    <div class="flex flex-col gap-6 p-6 md:p-8 bg-neutral-800">
-    <div class="flex items-center justify-between">
-     <h1 class="text-white text-2xl font-bold">Update Products</h1>
+    <div className="flex flex-col gap-6 p-6 md:p-8 bg-neutral-800">
+    <div className="flex items-center justify-between">
+     <h1 className="text-white text-2xl font-bold">Update Products</h1>
       <div className="flex items-center justify-self-end space-x-4">
      <Link to="/Main">
        <button 
