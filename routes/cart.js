@@ -4,11 +4,6 @@ const Product = require('../models/Product');
 const router = express.Router();
 const Order = require('../models/Order');
 
-// FALTA
-// MODIFICAR CARRITO
-// VACIAR CARRITO
-// CONVERTIR CARRITO A PEDIDO
-
 // MODIFICAR CARRITO
 router.put('/modifiyCart', async (req, res) => {
   try {
@@ -99,13 +94,14 @@ router.post('/cartToOrder', async (req, res) => {
     const productos = cart.productos.map(producto => {
       const total = producto.cantidad * producto.precio;
       const impuesto = total * 0.21; // Calculando el impuesto (IVA)
+      const descuento = total * 0; // Modificar en caso de descuentos
 
       return {
         productoId: producto._id,
         nombreProducto: producto.nombreProducto,
         total: total,
         cantidad: producto.cantidad,
-        descuento: 0,
+        descuento: descuento,
         impuesto: impuesto,
       };
     });

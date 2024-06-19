@@ -5,51 +5,64 @@ const router = express.Router();
 
 // Ruta para crear una nueva factura (POST /createBill)
 router.post('/createBill', async (req, res) => {
-  const { orderId, method } = req.body;
+  try {
+    const { orderId, method } = req.body;
 
-  const ordenSeleccionada = Order.findOne({ _id: orderId}); 
+    // Buscar la orden seleccionada
+    const ordenSeleccionada = await Order.findOne({ _id: orderId }); 
 
-  // Inicializacion de total
-  let total = 0;
+    if (!ordenSeleccionada) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
 
-  // Calcular el total del pedido y construir la estructura de productos
-  const productos = ordenSeleccionada.productos.map(producto => {
-    const precioFinal = producto.total - producto.descuento + producto.impuesto;
+    // Inicialización del total
+    let total = 0;
 
-    // Sumar el precio final al total
-    total += precioFinal;
+    // Calcular el total del pedido y construir la estructura de productos
+    const productos = ordenSeleccionada.productos.map(producto => {
+      const precioFinal = producto.total - producto.descuento + producto.impuesto;
 
-    return {
-      productoId: producto._id,
-      nombreProducto: producto.nombreProducto,
-      precioFinal: precioFinal,
-      cantidad: producto.cantidad,
-    };
-  });
+      // Sumar el precio final al total
+      total += precioFinal;
 
-  // Crear la nueva orden
-  const nuevaBill = new Bill({
-    orderId: ordenSeleccionada._id,
-    userId: ordenSeleccionada.userId,
-    responsable: `${ordenSeleccionada.nombreResponsable} ${ordenSeleccionada.apellidoResponsable}`,
-    dni: ordenGuardada.dniResponsable,
-    productos: productos,
-    total: total, // EL total de la sumatoria de preciosFinales de  los productos
-    fechaFactura: new Date().toISOString(), // Date de creacion
-    pagos: [{
-      pagoId: `${ordenSeleccionada._id}_${Date.now()}`,
-      fechaPago: new Date().toISOString(), // Deberia ser distinta -- Logica a implementar
-      monto: total,
-      metodoPago: method
-    }],
-  });
+      return {
+        productoId: producto._id,
+        nombreProducto: producto.nombreProducto,
+        precioFinal: precioFinal,
+        cantidad: producto.cantidad,
+      };
+    });
 
-  // Guardar la orden en la base de datos
-  const billGuardada = await nuevaBill.save();
+    // Crear la nueva orden
+    const nuevaBill = new Bill({
+      orderId: ordenSeleccionada._id,
+      userId: ordenSeleccionada.userId,
+      responsable: `${ordenSeleccionada.nombreResponsable} ${ordenSeleccionada.apellidoResponsable}`,
+      dni: ordenSeleccionada.dniResponsable,
+      productos: productos,
+      total: total, // EL total de la sumatoria de preciosFinales de  los productos
+      fechaFactura: new Date().toISOString(), // Fecha de creación
+      pagos: [{
+        pagoId: `${ordenSeleccionada._id}_${Date.now()}`,
+        fechaPago: new Date().toISOString(), // Debería ser distinta -- Lógica a implementar
+        monto: total,
+        metodoPago: method
+      }],
+    });
 
-  await Order.updateOne({ userId: ordenSeleccionada.userId }, { $set: { estado: 'pagado' } });
+    // Guardar la orden en la base de datos
+    const billGuardada = await nuevaBill.save();
 
+    // Actualizar el estado de la orden
+    await Order.updateOne({ _id: ordenSeleccionada._id }, { $set: { estado: 'pagado' } });
 
+    // Enviar la respuesta de éxito al cliente
+    res.status(201).json(billGuardada);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 // Middleware para obtener una factura por ID y verificar que pertenece al usuario en sesión activa
