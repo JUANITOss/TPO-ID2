@@ -1,47 +1,55 @@
 const Bill = require('../models/Bill');
 const Order = require('../models/Order');
 const express = require('express');
-// const ObjectId = require('mongodb').ObjectId; 
 const router = express.Router();
 
 // Ruta para crear una nueva factura (POST /createBill)
 router.post('/createBill', async (req, res) => {
   const { orderId, method } = req.body;
 
-  // const o_id = new ObjectId(orderId);
+  const ordenSeleccionada = Order.findOne({ _id: orderId}); 
 
-  const OrdenSeleccionada = Order.findOne({ _id: orderId}); 
+  // Inicializacion de total
+  let total = 0;
 
   // Calcular el total del pedido y construir la estructura de productos
-  const productos = OrdenSeleccionada.productos.map(producto => {
-    const total = producto.cantidad * producto.precio;
-    const impuesto = total * 0.21; // Calculando el impuesto (IVA)
+  const productos = ordenSeleccionada.productos.map(producto => {
+    const precioFinal = producto.total - producto.descuento + producto.impuesto;
+
+    // Sumar el precio final al total
+    total += precioFinal;
 
     return {
       productoId: producto._id,
       nombreProducto: producto.nombreProducto,
-      total: total,
+      precioFinal: precioFinal,
       cantidad: producto.cantidad,
-      descuento: 0,
-      impuesto: impuesto,
     };
   });
 
   // Crear la nueva orden
   const nuevaBill = new Bill({
-    userId: ordenGuardada.userId,
-    responsable: `${ordenGuardada.nombreResponsable} ${ordenGuardada.apellidoResponsable}`,
-    dniResponsable: ordenGuardada.dniResponsable,
+    orderId: ordenSeleccionada._id,
+    userId: ordenSeleccionada.userId,
+    responsable: `${ordenSeleccionada.nombreResponsable} ${ordenSeleccionada.apellidoResponsable}`,
+    dni: ordenGuardada.dniResponsable,
     productos: productos,
-    fechaPedido: new Date().toISOString(), // Fecha actual del pedido
-    estado: 'en proceso' // Estado por defecto
+    total: total, // EL total de la sumatoria de preciosFinales de  los productos
+    fechaFactura: new Date().toISOString(), // Date de creacion
+    pagos: [{
+      pagoId: `${ordenSeleccionada._id}_${Date.now()}`,
+      fechaPago: new Date().toISOString(), // Deberia ser distinta -- Logica a implementar
+      monto: total,
+      metodoPago: method
+    }],
   });
 
   // Guardar la orden en la base de datos
-  const ordenGuardada = await nuevaOrden.save();
+  const billGuardada = await nuevaBill.save();
 
-  // Ejemplo de respuesta
-  res.json({ success: true, message: `Factura creada para orderId: ${orderId} con método de pago: ${method}` });
+  await Order.updateOne({ userId: ordenSeleccionada.userId }, { $set: { estado: 'pagado' } });
+
+
 });
 
 // Middleware para obtener una factura por ID y verificar que pertenece al usuario en sesión activa
@@ -116,7 +124,7 @@ router.delete('/deleteBillId/:orderId', async (req, res) => {
     const delId = req.params.orderId; // Obtener el billId de los parámetros de la URL
 
     // Buscar la factura y borrarla
-    await Bill.findOneAndDelete({ orderId: delId });
+    await Bill.deleteOne({ orderId: delId });
 
     // Responder con un mensaje de éxito
     res.send({ message: 'Deleted Bill' });
