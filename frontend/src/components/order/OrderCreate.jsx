@@ -31,6 +31,8 @@ const OrderCreate = () => {
     if (!cart) {
       setError('No hay carrito para convertir');
       return;
+    } else {
+      alert("Order created succesfully")
     }
 
     setError(null);
@@ -70,8 +72,6 @@ const OrderCreate = () => {
     </div>
     </div>
     <div className="overflow-auto h-screen bg-neutral-800">
-      
-        
         <div className="mb-4">
         <label className="block text-white mb-2">Name:</label>
         <input 
@@ -103,26 +103,15 @@ const OrderCreate = () => {
           className='w-full px-3 py-2 border border-gray-300 rounded-md'
           />
          </div>
-         </div>
+         
          <button 
           onClick={handleSubmit} 
-          style={{
-            backgroundColor: '#4CAF50',
-            color: 'white',
-            padding: '10px 20px',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            display: 'block',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}
+          className='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white'
         >
-          Convertir Carrito a Orden
+          Convert Cart to Order
         </button>
-       
+        </div>
     </div>
-
   );
 }
 
