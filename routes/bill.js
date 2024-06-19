@@ -37,7 +37,6 @@ router.post('/createBill', async (req, res) => {
 
     // Crear la nueva factura
     const NewBill = new Bill({
-      orderId: orderId,
       userId: ordenSeleccionada.userId,
       responsable: `${ordenSeleccionada.nombreResponsable} ${ordenSeleccionada.apellidoResponsable}`,
       dni: ordenSeleccionada.dniResponsable,

@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const BillSchema = new mongoose.Schema({
-  orderId: String, //ID que se genera de la forma userId+date
   userId: String, // obtenido por express session
   responsable: String,
   dni: String,

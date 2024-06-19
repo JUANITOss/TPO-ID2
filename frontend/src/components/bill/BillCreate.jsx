@@ -13,6 +13,7 @@ const BillCreate = () => {
   const handlePayment = async (event) => {
     event.preventDefault();
     console.log("Enviando request con orderId:", orderId);
+
     try {
       // Realizar la llamada al backend con Axios
       await api.post('/bill/createBill', { orderId, method });
