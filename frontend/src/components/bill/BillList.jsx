@@ -61,9 +61,10 @@ const BillList = () => {
     <tbody>
       {bills.map((bill) => (
         <tr key={bill._id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-          <td className="text-white p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-bold">{bill.orderId}</td>
+          <td className="text-white p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-bold">{bill._id}</td>
           <td className="text-white p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-bold">{bill.userId}</td>
-          <td className="text-white p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-bold">{bill.productos}</td>
+          <td className="text-white p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-bold">{bill.responsable}</td>
+          <td className="text-white p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-bold">{bill.dni}</td>
           <td className="text-white p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-bold">{bill.total}</td>
           <td className="text-white p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-bold">{bill.fechaFactura}</td>
           <td className="">
