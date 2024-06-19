@@ -48,7 +48,7 @@ router.post('/createBill', async (req, res) => {
         pagoId: `${ordenSeleccionada._id}_${Date.now()}`,
         fechaPago: new Date().toISOString(), // Fecha de pago en formato ISO
         monto: total,
-        metodoPago: method
+        metodoPago: method,
       }],
     });
     
