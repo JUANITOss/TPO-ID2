@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const BillSchema = new mongoose.Schema({
+
   userId: String, // obtenido por express session
   responsable: String,
   dni: String,

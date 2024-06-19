@@ -9,7 +9,7 @@ router.post('/createBill', async (req, res) => {
     const { orderId, method } = req.body;
 
     // Buscar la orden seleccionada
-    const ordenSeleccionada = await Order.find({ _id: orderId }); 
+    const ordenSeleccionada = await Order.findOne({ _id: orderId });
     console.log('ESTA ES LA ORDEN');
     console.log(ordenSeleccionada);
 
@@ -50,7 +50,7 @@ router.post('/createBill', async (req, res) => {
         metodoPago: method,
       }],
     });
-    
+
     // Guardar la factura en la base de datos
     const billGuardada = await NewBill.save();
 
@@ -87,7 +87,7 @@ router.get('/getBillsId', getBill, (req, res) => {
   res.send(res.bill);
 });
 
-// Ruta para actualizar una factura (PUT /updateBillId)
+// Ruta para actualizar una factura (PUT /updateBillId/:billId)
 router.put('/updateBillId/:billId', getBill, async (req, res) => {
   try {
     const bill = await Bill.findById(req.params.billId);
@@ -122,7 +122,7 @@ router.put('/updateBillId/:billId', getBill, async (req, res) => {
   }
 });
 
-// Ruta para obtener todas las facturas (GET /bills)
+// Ruta para obtener todas las facturas (GET /getBills)
 router.get('/getBills', async (req, res) => {
   try {
       const bills = await Bill.find();
@@ -132,10 +132,10 @@ router.get('/getBills', async (req, res) => {
   }
 });
 
-// Ruta para eliminar una factura (DELETE /deleteBillId/:billId)
+// Ruta para eliminar una factura (DELETE /deleteBillId/:orderId)
 router.delete('/deleteBillId/:orderId', async (req, res) => {
   try {
-    const delId = req.params.orderId; // Obtener el billId de los parámetros de la URL
+    const delId = req.params.orderId; // Obtener el orderId de los parámetros de la URL
 
     // Buscar la factura y borrarla
     await Bill.deleteOne({ orderId: delId });
@@ -147,6 +147,5 @@ router.delete('/deleteBillId/:orderId', async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 });
-
 
 module.exports = router;

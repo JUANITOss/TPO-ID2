@@ -28,6 +28,7 @@ const BillList = () => {
     }
   };
 
+  
   return (
     <div className="flex flex-col gap-6 p-6 md:p-8 bg-neutral-800">
   <div className="flex items-center justify-between">
