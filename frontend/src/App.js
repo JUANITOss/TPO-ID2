@@ -11,7 +11,7 @@ import UpdateProduct from './components/product/UpdateProduct';
 import CartInfo from './components/cart/CartInfo';
 import OrderList from './components/order/OrderList';
 import BillList from './components/bill/BillList';
-import BillForm from './components/bill/BillForm';
+import BillCreate from './components/bill/BillCreate';
 import UpdateBillForm from './components/bill/UpdateBillForm';
 import OrderCreate from './components/order/OrderCreate'; 
 
@@ -31,9 +31,8 @@ function App() {
           <Route path='/list-order' element={<OrderList/>}/>
           <Route path='/create-order' element={<OrderCreate />}/>
           <Route path="/list-bills" element={<BillList />} />
-          <Route path="/create-bill" element={<BillForm />} />
+          <Route path="/create-bill" element={<BillCreate />} />
           <Route path="/update-bill" element={<UpdateBillForm />} />
-
         </Routes>
       </div>
     </Router>
