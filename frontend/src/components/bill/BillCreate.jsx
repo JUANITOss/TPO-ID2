@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import api from '../../api'; // Importa tu archivo donde tienes configurado Axios
 
-const CreateBill = () => {
+const BillCreate = () => {
   const location = useLocation();
   const { orderId } = location.state || {};
+
+  console.log("Order ID recibido:", orderId); 
+
   const [method, setMethod] = useState(''); // Estado para almacenar el método de pago seleccionado
 
-  const handlePayment = async () => {
+  const handlePayment = async (event) => {
+    event.preventDefault();
+    console.log("Enviando request con orderId:", orderId);
     try {
       // Realizar la llamada al backend con Axios
-      await api.post('/bill/createBill', {
-        orderId,
-        method,
-      });
-
+      await api.post('/bill/createBill', { orderId, method });
+      
       alert('Factura creada exitosamente!');
       // Redirigir a una página de confirmación
     } catch (error) {
@@ -50,4 +52,4 @@ const CreateBill = () => {
   );
 };
 
-export default CreateBill;
+export default BillCreate;

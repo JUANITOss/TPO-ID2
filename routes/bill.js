@@ -9,7 +9,9 @@ router.post('/createBill', async (req, res) => {
     const { orderId, method } = req.body;
 
     // Buscar la orden seleccionada
-    const ordenSeleccionada = await Order.findOne({ _id: orderId }); 
+    const ordenSeleccionada = await Order.find({ _id: orderId }); 
+    console.log('ESTA ES LA ORDEN');
+    console.log(ordenSeleccionada);
 
     if (!ordenSeleccionada) {
       return res.status(404).json({ error: 'Order not found' });
@@ -33,25 +35,25 @@ router.post('/createBill', async (req, res) => {
       };
     });
 
-    // Crear la nueva orden
-    const nuevaBill = new Bill({
-      orderId: ordenSeleccionada._id,
+    // Crear la nueva factura
+    const NewBill = new Bill({
+      orderId: orderId,
       userId: ordenSeleccionada.userId,
       responsable: `${ordenSeleccionada.nombreResponsable} ${ordenSeleccionada.apellidoResponsable}`,
       dni: ordenSeleccionada.dniResponsable,
       productos: productos,
-      total: total, // EL total de la sumatoria de preciosFinales de  los productos
-      fechaFactura: new Date().toISOString(), // Fecha de creación
+      total: total,
+      fechaFactura: new Date().toISOString(), // Fecha de creación en formato ISO
       pagos: [{
         pagoId: `${ordenSeleccionada._id}_${Date.now()}`,
-        fechaPago: new Date().toISOString(), // Debería ser distinta -- Lógica a implementar
+        fechaPago: new Date().toISOString(), // Fecha de pago en formato ISO
         monto: total,
         metodoPago: method
       }],
     });
-
-    // Guardar la orden en la base de datos
-    const billGuardada = await nuevaBill.save();
+    
+    // Guardar la factura en la base de datos
+    const billGuardada = await NewBill.save();
 
     // Actualizar el estado de la orden
     await Order.updateOne({ _id: ordenSeleccionada._id }, { $set: { estado: 'pagado' } });
