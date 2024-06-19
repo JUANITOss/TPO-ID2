@@ -106,7 +106,7 @@ const Main = () => {
             </li>
           </ul>
         </nav>
-        <a id = "sauce" target = "_blank" href = "https://youtu.be/vW5_Eo7xDGw?si=r59VDCFgrf1eWfn7&t=26"><img src="/xd.jpeg" alt=":v" width="20" height="20"/></a>
+        {/* <a id = "sauce" target = "_blank" href = "https://youtu.be/vW5_Eo7xDGw?si=r59VDCFgrf1eWfn7&t=26"><img src="/xd.jpeg" alt=":v" width="20" height="20"/></a> */}
       </div>
     </section>
   );
