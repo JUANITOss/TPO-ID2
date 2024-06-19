@@ -62,7 +62,7 @@ const BillCreate = () => {
                 value={method} 
                 onChange={handleMethodChange} 
                 className='w-full px-3 py-2 border border-gray-300 rounded-md'>
-                  <option value="">Seleccione un metodo de pago :v</option>
+                  <option value="">Select payment method</option>
                   <option value="MercadoPago">MercadoPago</option>
                   <option value="Tarjeta">Tarjeta</option>
                   <option value="Transferencia">Transferencia</option>
