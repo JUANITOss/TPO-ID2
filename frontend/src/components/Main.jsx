@@ -77,15 +77,7 @@ const Main = () => {
                 to="/list-order"
                 className="nav-link inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white w-48"
               >
-                My Order
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/create-bill"
-                className="nav-link inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white w-48"
-              >
-                Create Bill
+                List Orders
               </Link>
             </li>
             <li>
@@ -96,14 +88,14 @@ const Main = () => {
                 List Bills
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 to="/update-bill"
                 className="nav-link inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white w-48"
               >
                 Update Bill
               </Link>
-            </li>
+            </li> */}
           </ul>
         </nav>
         {/* <a id = "sauce" target = "_blank" href = "https://youtu.be/vW5_Eo7xDGw?si=r59VDCFgrf1eWfn7&t=26"><img src="/xd.jpeg" alt=":v" width="20" height="20"/></a> */}

@@ -13,7 +13,6 @@ const BillCreate = () => {
   const handlePayment = async (event) => {
     event.preventDefault();
     console.log("Enviando request con orderId:", orderId);
-
     try {
       // Realizar la llamada al backend con Axios
       await api.post('/bill/createBill', { orderId, method });
@@ -43,7 +42,6 @@ const BillCreate = () => {
     </div>
     </div>
     <div className="overflow-auto h-screen bg-neutral-800">
-    <div className="relative w-full overflow-auto">
       {orderId ? (
         <form onSubmit={handlePayment}>
     <div className="mb-4">
@@ -60,14 +58,22 @@ const BillCreate = () => {
               <option value="Transferencia">Transferencia</option>
               <option value="Pago en el local">Pago en el local</option>
           </select>
-         </div>
+
+          <button type="submit"
+                  className='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white'>
+         </button>
+
+      </div>
+
+        
+
          </form>
       ) : (
         <p>No se ha recibido una Order ID</p>
       )}
     </div>
     </div>
-    </div>
+    
   );
 };
 
