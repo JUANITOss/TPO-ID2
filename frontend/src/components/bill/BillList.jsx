@@ -32,15 +32,10 @@ const BillList = () => {
   <div class="flex items-center justify-between">
     <h1 class="text-white text-2xl font-bold">Bill</h1>
     <div className="flex items-center justify-self-end space-x-4">
-      <a href="/info-cart">
+      <a href="/Main">
         <button 
           className="nav-link inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white">
-          View Cart
-        </button>
-      </a>
-      <a href="/">
-        <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input h-10 px-4 py-2 bg-white text-black hover:bg-gray-700 hover:text-white">
-          Logout
+          Home
         </button>
       </a>
     </div>
