@@ -123,13 +123,10 @@ router.post('/cartToOrder', async (req, res) => {
     // Guardar la orden en la base de datos
     const ordenGuardada = await nuevaOrden.save();
 
-    
-
     // Vaciar Carrito
     const result = await Cart.updateOne({ userId: cart.userId }, { $set: { productos: [] } });
 
-  
-
+    // Respuesta a front
     res.status(201).json({ order: ordenGuardada });
 
   } catch (error) {
