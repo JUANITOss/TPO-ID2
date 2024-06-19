@@ -1,25 +1,48 @@
 const Bill = require('../models/Bill');
+const Order = require('../models/Order');
 const express = require('express');
+// const ObjectId = require('mongodb').ObjectId; 
 const router = express.Router();
 
 // Ruta para crear una nueva factura (POST /createBill)
 router.post('/createBill', async (req, res) => {
-    const bill = new Bill({
-        orderId: req.body.orderId,
-        userId: req.body.userId,
-        productos: req.body.productos,
-        total: req.body.total,
-        fechaFactura: req.body.fechaFactura,
-        pagos: req.body.pagos
-    });
-  
-    try {
-        const newBill = await bill.save();
-        res.status(201).send(newBill);
-    } catch (err) {
-        res.status(400).send({ message: err.message });
-    }
-  });  
+  const { orderId, method } = req.body;
+
+  // const o_id = new ObjectId(orderId);
+
+  const OrdenSeleccionada = Order.findOne({ _id: orderId}); 
+
+  // Calcular el total del pedido y construir la estructura de productos
+  const productos = OrdenSeleccionada.productos.map(producto => {
+    const total = producto.cantidad * producto.precio;
+    const impuesto = total * 0.21; // Calculando el impuesto (IVA)
+
+    return {
+      productoId: producto._id,
+      nombreProducto: producto.nombreProducto,
+      total: total,
+      cantidad: producto.cantidad,
+      descuento: 0,
+      impuesto: impuesto,
+    };
+  });
+
+  // Crear la nueva orden
+  const nuevaBill = new Bill({
+    userId: ordenGuardada.userId,
+    responsable: `${ordenGuardada.nombreResponsable} ${ordenGuardada.apellidoResponsable}`,
+    dniResponsable: ordenGuardada.dniResponsable,
+    productos: productos,
+    fechaPedido: new Date().toISOString(), // Fecha actual del pedido
+    estado: 'en proceso' // Estado por defecto
+  });
+
+  // Guardar la orden en la base de datos
+  const ordenGuardada = await nuevaOrden.save();
+
+  // Ejemplo de respuesta
+  res.json({ success: true, message: `Factura creada para orderId: ${orderId} con método de pago: ${method}` });
+});
 
 // Middleware para obtener una factura por ID y verificar que pertenece al usuario en sesión activa
 async function getBill(req, res, next) {

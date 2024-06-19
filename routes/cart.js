@@ -101,10 +101,12 @@ router.post('/cartToOrder', async (req, res) => {
       const impuesto = total * 0.21; // Calculando el impuesto (IVA)
 
       return {
+        productoId: producto._id,
         nombreProducto: producto.nombreProducto,
         total: total,
+        cantidad: producto.cantidad,
         descuento: 0,
-        impuesto: impuesto
+        impuesto: impuesto,
       };
     });
 
@@ -114,7 +116,6 @@ router.post('/cartToOrder', async (req, res) => {
       nombreResponsable: current.nombreResponsable,
       apellidoResponsable: current.apellidoResponsable,
       dniResponsable: current.dniResponsable,
-      recargo: 21, // Suponiendo que siempre es 21% de recargo por IVA
       productos: productos,
       fechaPedido: new Date().toISOString(), // Fecha actual del pedido
       estado: 'en proceso' // Estado por defecto
@@ -124,7 +125,7 @@ router.post('/cartToOrder', async (req, res) => {
     const ordenGuardada = await nuevaOrden.save();
 
     // Vaciar Carrito
-    const result = await Cart.updateOne({ userId: cart.userId }, { $set: { productos: [] } });
+    await Cart.updateOne({ userId: cart.userId }, { $set: { productos: [] } });
 
     // Respuesta a front
     res.status(201).json({ order: ordenGuardada });
