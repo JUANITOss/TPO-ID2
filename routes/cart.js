@@ -64,12 +64,12 @@ router.delete('/vaciarCart', async (req, res) => {
 // OBTENER CARRITO DE LA SESION
 router.get('/getCart', async (req, res) => {
   try {
-    const userId = req.session.userId; 
-    if (!userId) {
+    const user = req.session.userId; 
+    if (!user) {
       return res.status(400).send({ message: 'No se proporcionó el ID de usuario' });
     }
 
-    const cart = await Cart.findOne();
+    const cart = await Cart.findOne({ userId: user });
     if (!cart) {
       return res.status(404).send({ message: 'No se encontró el carrito para este usuario' });
     }

@@ -11,8 +11,8 @@ const CartInfo = () => {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const response = await api.get('/cart/getCart');
-        setCarrito(response.data.productos);
+        const res = await api.get('/cart/getCart');
+        setCarrito(res.data.productos);
         setLoading(false);
       } catch (err) {
         setError(err);
@@ -107,8 +107,8 @@ const CartForm = ({ carrito, setCarrito }) => {
         cantidad: parseInt(producto.cantidadInput, 10)
       }));
 
-      const response = await api.put('/cart/modifiyCart', { productos: productosToUpdate });
-      setCarrito(response.data.carrito.productos);
+      const res = await api.put('/cart/modifiyCart', { productos: productosToUpdate });
+      setCarrito(res.data.carrito.productos);
       alert('Carrito modificado con éxito');
     } catch (error) {
       console.error('Error al modificar el carrito', error);
