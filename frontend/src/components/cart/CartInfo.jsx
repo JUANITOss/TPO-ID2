@@ -106,7 +106,6 @@ const CartForm = ({ carrito, setCarrito }) => {
         _id: producto._id,
         cantidad: parseInt(producto.cantidadInput, 10)
       }));
-
       const res = await api.put('/cart/modifiyCart', { productos: productosToUpdate });
       setCarrito(res.data.carrito.productos);
       alert('Carrito modificado con éxito');

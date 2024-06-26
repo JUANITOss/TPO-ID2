@@ -73,7 +73,7 @@ router.get('/getCart', async (req, res) => {
     if (!cart) {
       return res.status(404).send({ message: 'No se encontró el carrito para este usuario' });
     }
-    
+
     console.log('Cart found:', cart);
 
     res.send(cart);

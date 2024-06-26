@@ -132,20 +132,4 @@ router.get('/getBills', async (req, res) => {
   }
 });
 
-// Ruta para eliminar una factura (DELETE /deleteBillId/:orderId)
-router.delete('/deleteBillId/:orderId', async (req, res) => {
-  try {
-    const delId = req.params.orderId; // Obtener el orderId de los parámetros de la URL
-
-    // Buscar la factura y borrarla
-    await Bill.deleteOne({ orderId: delId });
-
-    // Responder con un mensaje de éxito
-    res.send({ message: 'Deleted Bill' });
-  } catch (err) {
-    // Manejar errores y responder con un código de estado 500 si ocurre un problema
-    res.status(500).send({ message: err.message });
-  }
-});
-
 module.exports = router;
